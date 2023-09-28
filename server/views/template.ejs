@@ -1,0 +1,75 @@
+<%- ResLineOne%>
+<!DOCTYPE html>
+<html>
+<head>
+    <!--#include virtual="/include/topmeta.asp"-->
+    <link rel="amphtml" href="https://www.astrosage.com/2024/amp/<%= url%>">
+    <title><%= title %></title>
+    <meta name="keywords" content="<%= keywords%>" />
+    <meta name="description" content="<%= description %>" />
+    <script type="application/ld+json">{"@context": "https://schema.org/","@type": "BreadcrumbList","itemListElement": [{"@type":"ListItem", "position": 1,"name":"Home","item":"https://www.astrosage.com/" },{"@type":"ListItem", "position": 2,"name":"2024","item":"https://www.astrosage.com/2024/" },{"@type":"ListItem", "position": 3,"name":"<%= title %>","item":"https://www.astrosage.com/2024/<%= url%>" }]}</script>
+    <script type="application/ld+json">
+    {
+    "@context":"https://schema.org",
+    "@type":"NewsArticle",
+    "mainEntityOfPage":{"@type":"WebPage",
+    "@id":"https://www.astrosage.com/2024/<%= url%>"},
+    "url":"https://www.astrosage.com/2024/<%= url%>",
+    "headline":"<%= title %>",
+    "datePublished":"<%= FormattedNumberDate %>T<%= formattedTime%>:25+05:30",
+    "dateModified":"<%= FormattedNumberDate %>T<%= formattedTime%>:41+05:30",
+    "publisher":{"@type":"Organization",
+    "@id":"https://www.astrosage.com",
+    "name":"AstroSage",
+    "logo":{"@type":"ImageObject",
+    "url":"https://www.astrosage.com/images/logo-lg.png",
+    "width":200,"height":60}},
+    "image":{"@type":"ImageObject",
+    "url":"https://www.astrosage.com/2024/images/<%= conditonalSchemaImage%>",
+    "width":1280,"height":720},
+    "articleSection":"<%= title %>",
+    "description":"<%= description %>",
+    "author":{"@type":"Person",
+    "name":"<%= profilename%>",
+    "url":"<%= profileUrl%>",
+    "image":{"@type":"ImageObject",
+    "url":"<%= profileImageUrl%>",
+    "height":120,"width":120},
+    "sameAs":["https://www.astrosage.com"]
+    }
+    }
+    </script>
+    <!--#include virtual="/include/client/cssscript-other.asp"-->
+</head>
+<body>
+    <%- Ressession%>
+    <!--#include virtual="/include/client/header-no.asp"-->
+    <div id="roundborder" class="ui-container ui-margin-tb">
+        <div id="roundtopheadid">
+            <div class="roundtophead">
+                <div class="AscTopHead" style="text-align: left;">
+                    <a href="/" title="Home" class="BreadCrumb">Home</a> &#187; <a href="/2024/" class="BreadCrumb">
+                        2024 </a>&#187; <a href="#" class="BreadCrumb"><%= h1%></a>
+                </div>
+            </div>
+        </div>
+        <div class="ui-content bg-light-gray">
+            <h1 align="center"><%= h1%></h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="author-date text-right">
+                        <span>Author: <a href="<%= profileUrl%>"><%= profilename%></a></span>
+                        | <span>Updated <%= formattedDate%> <%= formattedTime%> <%= amOrpm%> IST </span>
+                           </div>
+                </div>
+            </div>
+
+                <%- content%>
+                
+
+         
+            </div>
+    </div>
+    <!--#include virtual = '/include/client/footer-no.asp'-->
+</body>
+</html>
