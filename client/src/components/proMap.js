@@ -1,77 +1,84 @@
- export const LangAuthor = [
-     {
-     FaceName:"Tamil",    
-     TempName:"Tamil",    
-     TempSearchName:"searchTamil",    
-     searchTamil:true,
-},
+export const LangAuthor = [
     {
-    FaceName:"Telugu",    
-    TempName:"Telugu",    
-    TempSearchName:"searchTelugu",    
-    searchTelugu:true,
-},
+        FaceName: "Tamil",
+        TempName: "Tamil",
+        TempSearchName: "searchTamil",
+        searchTamil: true,
+    },
     {
-    FaceName:"Gujarati",    
-    TempName:"Gujarati",    
-    TempSearchName:"searchGujarati",    
-    searchGujarati:true,
-},
+        FaceName: "Telugu",
+        TempName: "Telugu",
+        TempSearchName: "searchTelugu",
+        searchTelugu: true,
+    },
     {
-    FaceName:"Marathi",    
-    TempName:"Marathi",    
-    TempSearchName:"searchMarathi",    
-    searchMarathi:true,
-},
+        FaceName: "Gujarati",
+        TempName: "Gujarati",
+        TempSearchName: "searchGujarati",
+        searchGujarati: true,
+    },
     {
-    FaceName:"Malayalam",    
-    TempName:"Malayalam",    
-    TempSearchName:"searchMalayalam",    
-    searchMalayalam:true,
-},
+        FaceName: "Marathi",
+        TempName: "Marathi",
+        TempSearchName: "searchMarathi",
+        searchMarathi: true,
+    },
     {
-    FaceName:"Odia",    
-    TempName:"Odia",    
-    TempSearchName:"searchOdia",    
-    searchOdia:true,
-},
+        FaceName: "Malayalam",
+        TempName: "Malayalam",
+        TempSearchName: "searchMalayalam",
+        searchMalayalam: true,
+    },
     {
-    FaceName:"Assamesse",    
-    TempName:"Assamesse",    
-    TempSearchName:"searchAssamesse",    
-    searchAssamesse:true,
-},
+        FaceName: "Odia",
+        TempName: "Odia",
+        TempSearchName: "searchOdia",
+        searchOdia: true,
+    },
     {
-    FaceName:"Kannada",    
-    TempName:"Kannada",    
-    TempSearchName:"searchKannada",    
-    searchKannada:true,
-},
+        FaceName: "Assamesse",
+        TempName: "Assamesse",
+        TempSearchName: "searchAssamesse",
+        searchAssamesse: true,
+    },
     {
-    FaceName:"Bengali",    
-    TempName:"Bengali",    
-    TempSearchName:"searchBengali",    
-    searchBengali:true,
-},
+        FaceName: "Kannada",
+        TempName: "Kannada",
+        TempSearchName: "searchKannada",
+        searchKannada: true,
+    },
     {
-    FaceName:"Urdu",    
-    TempName:"Urdu",    
-    TempSearchName:"searchUrdu",    
-    searchUrdu:true,
-}
+        FaceName: "Bengali",
+        TempName: "Bengali",
+        TempSearchName: "searchBengali",
+        searchBengali: true,
+    },
+    {
+        FaceName: "Urdu",
+        TempName: "Urdu",
+        TempSearchName: "searchUrdu",
+        searchUrdu: true,
+    }
 
- ]
- export const AuthorMains = [
-     {
-         FaceName:"Astro Mragaank",    
-         TempName:"Mragaank",    
-         TempSearchName:"searchMragaank",    
-         searchTamil:true,
-},
-     {
-     FaceName:"Astro Hariharan",    
-     TempName:"Hariharan",    
-     TempSearchName:"searchHariharan",    
-     searchTamil:true,
-}
- ]
+]
+export const AuthorMains = [
+    {
+        FaceName: "Astro Mragaank",
+        TempName: "Mragaank",
+        TempSearchName: "searchMragaank",
+        searchTamil: true,
+    },
+    {
+        FaceName: "Astro Hariharan",
+        TempName: "Hariharan",
+        TempSearchName: "searchHariharan",
+        searchTamil: true,
+    },
+    {
+        FaceName: "Prashansa",
+        TempName: "Prashansa",
+        TempSearchName: "searchPrashansa",
+        searchTamil: true,
+    }
+
+]

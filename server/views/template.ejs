@@ -3,18 +3,18 @@
 <html>
 <head>
     <!--#include virtual="/include/topmeta.asp"-->
-    <link rel="amphtml" href="https://www.astrosage.com/2024/amp/<%= url%>">
+    <link rel="amphtml" href="https://www.astrosage.com/<%= whichYear%>/amp/<%= url%>">
     <title><%= title %></title>
     <meta name="keywords" content="<%= keywords%>" />
     <meta name="description" content="<%= description %>" />
-    <script type="application/ld+json">{"@context": "https://schema.org/","@type": "BreadcrumbList","itemListElement": [{"@type":"ListItem", "position": 1,"name":"Home","item":"https://www.astrosage.com/" },{"@type":"ListItem", "position": 2,"name":"2024","item":"https://www.astrosage.com/2024/" },{"@type":"ListItem", "position": 3,"name":"<%= title %>","item":"https://www.astrosage.com/2024/<%= url%>" }]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org/","@type": "BreadcrumbList","itemListElement": [{"@type":"ListItem", "position": 1,"name":"Home","item":"https://www.astrosage.com/" },{"@type":"ListItem", "position": 2,"name":"<%= whichYear%>","item":"https://www.astrosage.com/<%= whichYear%>/" },{"@type":"ListItem", "position": 3,"name":"<%= title %>","item":"https://www.astrosage.com/<%= whichYear%>/<%= url%>" }]}</script>
     <script type="application/ld+json">
     {
     "@context":"https://schema.org",
     "@type":"NewsArticle",
     "mainEntityOfPage":{"@type":"WebPage",
-    "@id":"https://www.astrosage.com/2024/<%= url%>"},
-    "url":"https://www.astrosage.com/2024/<%= url%>",
+    "@id":"https://www.astrosage.com/<%= whichYear%>/<%= url%>"},
+    "url":"https://www.astrosage.com/<%= whichYear%>/<%= url%>",
     "headline":"<%= title %>",
     "datePublished":"<%= FormattedNumberDate %>T<%= formattedTime%>:25+05:30",
     "dateModified":"<%= FormattedNumberDate %>T<%= formattedTime%>:41+05:30",
@@ -25,7 +25,7 @@
     "url":"https://www.astrosage.com/images/logo-lg.png",
     "width":200,"height":60}},
     "image":{"@type":"ImageObject",
-    "url":"https://www.astrosage.com/2024/images/<%= conditonalSchemaImage%>",
+    "url":"https://www.astrosage.com/<%= whichYear%>/images/<%= conditonalSchemaImage%>",
     "width":1280,"height":720},
     "articleSection":"<%= title %>",
     "description":"<%= description %>",
@@ -48,8 +48,8 @@
         <div id="roundtopheadid">
             <div class="roundtophead">
                 <div class="AscTopHead" style="text-align: left;">
-                    <a href="/" title="Home" class="BreadCrumb">Home</a> &#187; <a href="/2024/" class="BreadCrumb">
-                        2024 </a>&#187; <a href="#" class="BreadCrumb"><%= h1%></a>
+                    <a href="/" title="Home" class="BreadCrumb">Home</a> &#187; <a href="/<%= whichYear%>/" class="BreadCrumb">
+                        <%= whichYear%> </a>&#187; <a href="#" class="BreadCrumb"><%= h1%></a>
                 </div>
             </div>
         </div>
@@ -64,7 +64,10 @@
                 </div>
             </div>
 
-                <%- content%>
+                                  <%- finalHtmlContent%>
+
+                
+                                 <%- faqRealHtmlNormalCheckedorUnchecked%>
                 
 
          

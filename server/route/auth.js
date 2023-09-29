@@ -15,10 +15,11 @@ const ejs = require('ejs');
   const FormattedNumberDate = getCurrentFormattedNumberDate();
 
 router.post('/register', (req, res) => {
-  const { title, keywords, description, url , h1 , content, schemaImgUrl , checkedOptions } = req.body
+  const { title, keywords, whichYear,description, url , h1 , content, schemaImgUrl , checkedOptions , selectedLanguage , faqRealHtmlNormalCheckedorUnchecked  , finalHtmlContent , finalHtmlContentAMP , faqRealHtmlNormalAMPCheckedorUnchecked} = req.body
 
   const data = checkedOptions
-  
+
+
   // Extracting values
   const firstItem = data[0]; 
   const profilename = firstItem.profilename;
@@ -27,9 +28,13 @@ router.post('/register', (req, res) => {
   const ResLineOne = `<% Response.Charset="utf-8" %>`
   const Ressession = `<% session("topmenulink")="horoscope" %>`
 
-  const conditonalSchemaImage = schemaImgUrl === ""  ? "2024/images/horoscope-predictions-qoute-english.jpg" : schemaImgUrl
+
+  let imgresp = whichYear == "2023" ?  "/images/horoscope-2023.jpg" : whichYear == "2024" ?  "/images/horoscope-predictions-qoute-english.jpg" : ""
+  const conditonalSchemaImage = schemaImgUrl === ""  ? imgresp : schemaImgUrl
   
 console.log(profilename);
+
+
 console.log(req.body)
   const templateData = {
     title,
@@ -43,12 +48,17 @@ console.log(req.body)
     formattedTime ,
     FormattedNumberDate,
     amOrpm, 
+    whichYear,
     checkedOptions,
      profilename , 
     profileUrl , 
     profileImageUrl ,
     ResLineOne , 
-    Ressession
+    Ressession,
+    faqRealHtmlNormalAMPCheckedorUnchecked,
+    faqRealHtmlNormalCheckedorUnchecked , 
+    finalHtmlContent , 
+    finalHtmlContentAMP
 };
 
 //  const templatePath = path.join(__dirname, '../views', 'template.ejs');

@@ -3,6 +3,7 @@ export const Tamil =    {
     profilename:"S Raja" , 
     profileUrl:"https://horoscope.astrosage.com/s-raja/",
     profileImageUrl:"https://horoscope.astrosage.com/wp-content/uploads/2021/12/raja.jpg",
+    FaqLangH2:"அடிக்கடி கேட்கப்படும் கேள்விகள்"
 }
 export const Telugu =    {
     searchTelugu:true,
@@ -45,6 +46,7 @@ export const Kannada =    {
     profilename:"Sudha Bangera" , 
     profileUrl:"https://horoscope.astrosage.com/sudha-bangera/",
     profileImageUrl:"https://horoscope.astrosage.com/wp-content/uploads/2022/02/sudha.jpg",
+    FaqLangH2:"ಹೆಚ್ಚಾಗಿ ಕೇಳುವ ಪ್ರಶ್ನೆಗಳು"
 }
 export const Bengali =    {
     searchBengali:true,
@@ -59,6 +61,13 @@ export const Urdu =    {
     profileImageUrl:"https://horoscope.astrosage.com/wp-content/uploads/2021/11/astrologer-h.m.hariharan-1.jpg",
 }
 
+//  Regional Author End 
+
+
+// Lang section 
+
+
+
 export const Mragaank =    {
     searchMragaank:true,
     profilename:"AstroGuru Mragaank (Dr. Mragaank)" , 
@@ -70,5 +79,11 @@ export const Hariharan =    {
     profilename:"Astro Hariharan" , 
     profileUrl:"https://horoscope.astrosage.com/astro-hariharan/",
     profileImageUrl:"https://horoscope.astrosage.com/wp-content/uploads/2021/11/astrologer-h.m.hariharan-1.jpg",
+}
+export const Prashansa =    {
+    searchPrashansa:true,
+    profilename:"Prashansa" , 
+    profileUrl:"https://horoscope.astrosage.com/prashansa/",
+    profileImageUrl:"https://horoscope.astrosage.com/wp-content/uploads/2023/01/prashansa.jpg",
 }
 
