@@ -4,7 +4,7 @@ const Vcsodeembed = () => {
     return (
         <>
     
-        <embed src="https://vscode.dev/" style={{width:"100%"  , height:"500px"}}></embed>
+        <embed src="" style={{width:"100%"  , height:"500px"}}></embed>
     
     </>
   )

@@ -1,0 +1,20 @@
+{
+  "Sahil": {
+    "name": "Sahil",
+    "class": "A",
+    "age": 25,
+    "color": "Blue"
+  },
+  "Ritik": {
+    "name": "Ritik",
+    "class": "B",
+    "age": 28,
+    "color": "Red"
+  },
+  "JS": {
+    "name": "JS",
+    "class": "C",
+    "age": 30,
+    "color": "Green"
+  }
+}

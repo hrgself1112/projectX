@@ -1,0 +1,52 @@
+[
+  {
+    "profilename": "Tamil",
+    "uniqueKey": "Tamil",
+    "uniqueFindingKey": "searchTamil"
+  },
+  {
+    "profilename": "Telugu",
+    "uniqueKey": "Telugu",
+    "uniqueFindingKey": "searchTelugu"
+  },
+  {
+    "profilename": "Gujarati",
+    "uniqueKey": "Gujarati",
+    "uniqueFindingKey": "searchGujarati"
+  },
+  {
+    "profilename": "Marathi",
+    "uniqueKey": "Marathi",
+    "uniqueFindingKey": "searchMarathi"
+  },
+  {
+    "profilename": "Malayalam",
+    "uniqueKey": "Malayalam",
+    "uniqueFindingKey": "searchMalayalam"
+  },
+  {
+    "profilename": "Odia",
+    "uniqueKey": "Odia",
+    "uniqueFindingKey": "searchOdia"
+  },
+  {
+    "profilename": "Assamesse",
+    "uniqueKey": "Assamesse",
+    "uniqueFindingKey": "searchAssamesse"
+  },
+  {
+    "profilename": "Kannada",
+    "uniqueKey": "Kannada",
+    "uniqueFindingKey": "searchKannada"
+  },
+  {
+    "profilename": "Bengali",
+    "uniqueKey": "Bengali",
+    "uniqueFindingKey": "searchBengali"
+  },
+  {
+    "profilename": "Urdu",
+    "uniqueKey": "Urdu",
+    "uniqueFindingKey": "searchUrdu"
+  }
+]

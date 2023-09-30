@@ -1,8 +1,11 @@
 'use client'
-import { LangAuthor   , AuthorMains} from "@/components/proMap";
-import React, { useState } from "react";
+import useFetch from "@/components/hooks/fetchHook";
+// import {  } from "@/components/proMap";
+import React, { useState , useEffect} from "react";
 
 export const Form = () => {
+  const [ProfileDataHook, setProfileDataHook] = useState("")
+  
   const [user, setuser] = useState({
     title: "",
     keywords: "",
@@ -20,6 +23,36 @@ export const Form = () => {
     isCheckedFAQ: false  , // Initialize to false
     whichYear: "", 
   });
+
+  const { data: LangAuthorr , isLoading : LangAuthorrisLoading, error: LangAuthorrerror } = useFetch('http://localhost:8080/api/data/LangAuthor'); // Adjust the URL
+  const { data: AuthorMains , isLoading : AuthorMainsisLoading, error: AuthorMainserror } = useFetch('http://localhost:8080/api/data/AuthorMains'); // Adjust the URL
+  const { data: ProfileData , isLoading : ProfileisLoadingData, error: ProfileerrorData } = useFetch('http://localhost:8080/api/data/ProfileData'); // Adjust the URL
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/delete/savedPages');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const jsonData = await response.json();
+      setData(jsonData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    // This will trigger a re-render, causing an infinite loop
+    if (!ProfileisLoadingData && !ProfileerrorData) {
+      const yourData = ProfileData; // Store the fetched data in a variable
+      // console.log(yourData)
+      setProfileDataHook(yourData)
+      // Now you can use 'yourData' in your component
+    }
+    
+  }, [LangAuthorr ,AuthorMains , ProfileData]);
+
+
 
   const handleYearChange = (year) => {
     setuser((prevUser) => ({
@@ -44,69 +77,19 @@ const handleCheckbox = (name, checked) => {
  
 if (checked) {
   // If the checkbox is checked, add the corresponding data
-  if (name === "Tamil") {
-    updatedCheckedOptions.push(require("@/components/profile").Tamil);
-  } else if (name === "Telugu") {
-    updatedCheckedOptions.push(require("@/components/profile").Telugu);
-  } else if (name === "Gujarati") {
-    updatedCheckedOptions.push(require("@/components/profile").Gujarati);
-  } else if (name === "Marathi") {
-    updatedCheckedOptions.push(require("@/components/profile").Marathi);
-  } else if (name === "Malayalam") {
-    updatedCheckedOptions.push(require("@/components/profile").Malayalam);
-  } else if (name === "Odia") {
-    updatedCheckedOptions.push(require("@/components/profile").Odia);
-  } else if (name === "Assamesse") {
-    updatedCheckedOptions.push(require("@/components/profile").Assamesse);
-  } else if (name === "Kannada") {
-    updatedCheckedOptions.push(require("@/components/profile").Kannada);
-  } else if (name === "Bengali") {
-    updatedCheckedOptions.push(require("@/components/profile").Bengali);
-  } else if (name === "Urdu") {
-    updatedCheckedOptions.push(require("@/components/profile").Urdu);
-  }
-   else if (name === "Mragaank") {
-    updatedCheckedOptions.push(require("@/components/profile").Mragaank);
-  }
-   else if (name === "Hariharan") {
-    updatedCheckedOptions.push(require("@/components/profile").Hariharan);
-  }
-   else if (name === "Prashansa") {
-    updatedCheckedOptions.push(require("@/components/profile").Prashansa);
+  if (name in ProfileDataHook) {
+    console.log(ProfileDataHook[name])
+    updatedCheckedOptions.push(ProfileDataHook[name]);
+    console.log(name);
   }
 } else {
   updatedCheckedOptions = updatedCheckedOptions.filter((option) => {
-    switch (name) {
-      case "Tamil":
-        return !("searchTamil" in option);
-      case "Telugu":
-        return !("searchTelugu" in option);
-      case "Gujarati":
-        return !("searchGujarati" in option);
-      case "Marathi":
-        return !("searchMarathi" in option);
-      case "Malayalam":
-        return !("searchMalayalam" in option);
-      case "Odia":
-        return !("searchOdia" in option);
-      case "Assamesse":
-        return !("searchAssamesse" in option);
-      case "Kannada":
-        return !("searchKannada" in option);
-      case "Bengali":
-        return !("searchBengali" in option);
-      case "Urdu":
-        return !("searchUrdu" in option);
-      case "Mragaank":
-        return !("searchMragaank" in option);
-      case "Hariharan":
-        return !("searchHariharan" in option);
-      case "Prashansa":
-        return !("searchPrashansa" in option);
-   
-      default:
-        return true;
+    if (name in ProfileDataHook) {
+      // Check if the "unique" property matches the current language
+      console.log(name)
+      return option.uniqueKey !== name;
     }
+    return true;
   });
 }
 
@@ -496,24 +479,23 @@ const faqElements = FAQ.map((item, index) => (`
                   <div className="mb-4 gridMakerLang py-3 grid grid1fr gap-3 ">
 
                         {
-                         LangAuthor.map((items , index)=>{
+                        LangAuthorr ? ( LangAuthorr.map((items , index)=>{
                           return(
                               <>
-                    <label className="px-2">
+                                        <label className="px-2">
                       <input className="mr-2 leading-tight"
                        type="checkbox"
-                       name={items.TempName}
-                       checked={user.checkedOptions.some((option) => `${items.TempSearchName}` in option)}
-                       onChange={(e) => handleCheckbox(`${items.TempName}`, e.target.checked)}
+                       name={items.uniqueKey}
+                       checked={user.checkedOptions.some((option) => Object.values(option).includes(items.uniqueFindingKey))}
+                       onChange={(e) => handleCheckbox(`${items.uniqueKey}`, e.target.checked)}
                       />
                       <span className="text-sm">
-                        {items.FaceName}
+                        {items.profilename}
                       </span>
                     </label>
-
                               </>
                           )
-                         })   
+                         })   ):<p>Loading or empty data...</p>
 
                         }
 
@@ -528,24 +510,23 @@ const faqElements = FAQ.map((item, index) => (`
 
                   <div className="mb-4 gridMakerLang py-3 grid gap-3" style={{ gridTemplateColumns: "1fr 1fr" }}>
                   {
-                         AuthorMains.map((items , index)=>{
+                         AuthorMains?(AuthorMains.map((items , index)=>{
                           return(
                               <>
-                    <label className="px-2">
+                                     <label className="px-2">
                       <input className="mr-2 leading-tight"
                        type="checkbox"
-                       name={items.TempName}
-                       checked={user.checkedOptions.some((option) => `${items.TempSearchName}` in option)}
-                       onChange={(e) => handleCheckbox(`${items.TempName}`, e.target.checked)}
+                       name={items.uniqueKey}
+                       checked={user.checkedOptions.some((option) => Object.values(option).includes(items.uniqueFindingKey))}
+                       onChange={(e) => handleCheckbox(`${items.uniqueKey}`, e.target.checked)}
                       />
                       <span className="text-sm">
-                        {items.FaceName}
+                        {items.profilename}
                       </span>
                     </label>
-
                               </>
                           )
-                         })   
+                         })   ):<p>Loading or empty data...</p>
 
                         }
 
@@ -569,6 +550,11 @@ const faqElements = FAQ.map((item, index) => (`
 
             
           </form>
+
+
+<button onClick={fetchData}>Delelte All files</button>
+
+
               </div>
       </section>
 
