@@ -38,8 +38,8 @@ function MyForm() {
 <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
   <div className="mx-auto max-w-2xl">
     <div className="text-center">
-      <h2 className="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
-        Post a comment
+      <h2 className="text-xl text-gray-800 font-bold sm:text-3xl">
+        Create Profile
       </h2>
     </div>
     <div className="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
