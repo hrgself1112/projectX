@@ -5,6 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 const { getCurrentFormattedDate, getCurrentFormattedTime, getamOrpm, getCurrentFormattedNumberDate } = require('../utils/date');
+const mammoth = require('mammoth'); // Install this library: npm install mammoth
+
+
 
 const ejs = require('ejs');
 
@@ -43,76 +46,42 @@ router.get('/api/delete/savedPages', (req, res) => {
 
   res.status(200).send('Directory and files deleted successfully');
 });
+router.get('/api/delete/savedData', (req, res) => {
+  const directoryPath = path.join(__dirname, '../savedData'); // Change to your directory path
+  console.log(directoryPath);
 
+  // Use the recursive function to delete the directory and its contents
+  deleteAllFilesAndSubdirectories(directoryPath);
+
+  res.status(200).send('Deleted File Data');
+});
 
 
 router.post('/saveData', async (req, res) => {
-  console.log(req.body)
-  let { profilename, profileImageUrl, profileUrl, UniqueKey } = req.body
   try {
-    // Get the submitted data from the request body
-    const formData = profilename;
+    const { profilename, profileImageUrl, profileUrl, UniqueKey } = req.body;
 
-    // Load existing data from the JSON file (if it exists)
-    fs.readFile('./profiles/AuthorMains.json', 'utf-8', (readErr, data) => {
+    fs.readFile('./profiles/databyauthorname.json', 'utf-8', (readErr, data) => {
       if (readErr) {
-        // Handle errors, e.g., file doesn't exist or read error
         console.error(readErr);
         res.status(500).json({ error: 'Internal server error' });
       } else {
-        // Parse the existing data
+        // Parse the existing data or initialize it as an empty array
         let existingData = [];
-        // console.log(existingData);
+
         if (data) {
           existingData = JSON.parse(data);
         }
-
-        // console.log(existingData);
-        console.log("hiiii")
-
-
-        // Add the new data to the existing data
-        existingData.push({
-          profilename: profilename,
-          profileUrl: profileUrl,
-          profileImageUrl: profileImageUrl,
-          uniqueKey: UniqueKey, 
-        });
-          
-
-        let sourceData = {
-          profilename: 'John',
-          profileImageUrl: 'image.jpg',
-          profileUrl: 'example.com/john',
-          UniqueKey: '12345'
+        const newData = {
+          profilename:profilename,
+          uniqueKey:UniqueKey,
+          uniqueFindingKey:UniqueKey,
         };
-        
-        // Get an array of keys and values
-        let keys = Object.keys(sourceData);
-        let values = Object.values(sourceData);
-        
-        // Create an object from the keys and values with the replacements
-        let dynamicObject = {};
-        for (let i = 0; i < keys.length; i++) {
-          // Conditionally replace the key UniqueKey with UniqueKeySearch
-          let key = keys[i] === 'UniqueKey' ? 'UniqueKeySearch' : keys[i];
-        
-          // If the key is profilename, concatenate UniqueKeySearch with the value
-          let value = key === 'profilename' ? 'UniqueKeySearch' + values[i] : values[i];
-        
-          dynamicObject[key] = value;
-        }
-        
-        // Push the dynamicObject into an array
-        // let existingData = [];
-        existingData.push(dynamicObject);
-        
-        console.log(existingData);
-        
-        // Save the updated data (including existing and new data) back to the JSON file
-        fs.writeFile('./profiles/AuthorMains.json', JSON.stringify(existingData, null, 2), (writeErr) => {
+
+        existingData.push(newData);
+
+         fs.writeFile('./profiles/databyauthorname.json', JSON.stringify(existingData, null, 2), (writeErr) => {
           if (writeErr) {
-            // Handle errors, e.g., write error
             console.error(writeErr);
             res.status(500).json({ error: 'Internal server error' });
           } else {
@@ -121,14 +90,57 @@ router.post('/saveData', async (req, res) => {
         });
       }
     });
+
+
+    fs.readFile('./profiles/authorprofiledata.json', 'utf-8', (readErr, data) => {
+      if (readErr) {
+        console.error(readErr);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        // Parse the existing data or initialize it as an empty array
+        let existingDatanew = {};
+
+        if (data) {
+          existingDatanew = JSON.parse(data);
+        }
+
+        let searchQuery = "search"+ UniqueKey
+      
+        // Create a new entry for the author using their UniqueKey as the key
+        existingDatanew[UniqueKey] = {
+          uniqueFindingKey: 'search' + UniqueKey,
+          uniqueKey: UniqueKey,
+          [searchQuery]: true,
+          profilename: profilename,
+          profileUrl: profileUrl,
+          profileImageUrl: profileImageUrl,
+        };
+
+         fs.writeFile('./profiles/authorprofiledata.json', JSON.stringify(existingDatanew, null, 2), (writeErr) => {
+          if (writeErr) {
+            console.error(writeErr);
+            res.status(500).json({ error: 'Internal server error' });
+          } else {
+            res.status(200).json({ message: 'Data saved successfully' });
+          }
+        });
+      }
+    });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
-})
+
+
+  
+
+  
+});
+
 router.post('/register', (req, res) => {
   const { title, keywords, whichYear, description, url, h1, content, schemaImgUrl, checkedOptions, faqRealHtmlNormalCheckedorUnchecked, finalHtmlContent, finalHtmlContentAMP, faqRealHtmlNormalAMPCheckedorUnchecked } = req.body
-
+console.log(req.body)
   const data = checkedOptions
 
 
@@ -186,12 +198,41 @@ router.post('/register', (req, res) => {
   fs.writeFileSync(`./savedPages/${url}`, renderedTemplate);
   fs.writeFileSync(`./savedPages/amp/${url}`, amprenderedTemplate);
   //  fs.writeFileSync(, htmlContent)
+ // Save req.body as a JSON file
 
+ function removeExtension(fileName) {
+  // Check if the file name ends with ".asp"
+  if (fileName.endsWith('.asp')) {
+    // Use slice to remove the last 4 characters (".asp")
+    return fileName.slice(0, -4);
+  }
+  // If the file name doesn't end with ".asp", return it as is
+  return fileName;
+}
 
+ const jsonDataFilePath = path.join(__dirname, '../savedData', `${removeExtension(url)}.json`);
+ fs.writeFileSync(jsonDataFilePath, JSON.stringify(req.body, null, 2), 'utf-8');
+
+ res.json({ message: 'Template and data saved successfully.' });
   res.json({ message: 'Template saved successfully.' });
 
 });
 
+
+router.get('/api/savedfiles', (req, res) => {
+const dataFolderPath = path.join(process.cwd(), 'savedData'); // Path to your data folder
+
+  try {
+    // Read the list of files in the "savedData" folder
+    const fileNames = fs.readdirSync(dataFolderPath);
+
+    // Send the file names as a JSON response
+    res.status(200).json({ fileNames });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
 
 
 

@@ -53,6 +53,32 @@ app.get('/api/data/:fileName', (req, res) => {
     });
   });
 });
+app.get('/api/savedfiles/:fileName', (req, res) => {
+  const { fileName } = req.params;
+  const filePath = `./savedData/${fileName}.json`; // Assuming files are in the 'data' folder
+
+  // Check if the file exists
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      // File does not exist
+      return res.status(404).json({ error: 'File not found' });
+    }
+
+    // Read the file and send its contents as JSON
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+
+      try {
+        const jsonData = JSON.parse(data);
+        res.json(jsonData);
+      } catch (error) {
+        res.status(500).json({ error: 'Error parsing JSON data' });
+      }
+    });
+  });
+});
 
 
 
