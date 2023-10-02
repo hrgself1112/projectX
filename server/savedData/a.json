@@ -1,0 +1,28 @@
+{
+  "title": "",
+  "keywords": "",
+  "description": "",
+  "url": "a.asp",
+  "h1": "",
+  "schemaImgUrl": "",
+  "content": "",
+  "ImageAlt": "",
+  "checkedOptions": [
+    {
+      "uniqueFindingKey": "searchTamil",
+      "uniqueKey": "Tamil",
+      "searchTamil": true,
+      "profilename": "S Raja",
+      "profileUrl": "https://horoscope.astrosage.com/s-raja/",
+      "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2021/12/raja.jpg",
+      "FaqLangH2": "அடிக்கடி கேட்கப்படும் கேள்விகள்"
+    }
+  ],
+  "faqRealHtmlNormalCheckedorUnchecked": "",
+  "selectedLanguage": "",
+  "finalHtmlContent": "",
+  "finalHtmlContentAMP": "",
+  "faqRealHtmlNormalAMPCheckedorUnchecked": "",
+  "whichYear": "",
+  "FaqBt": ""
+}

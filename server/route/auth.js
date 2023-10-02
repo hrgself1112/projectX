@@ -139,8 +139,8 @@ router.post('/saveData', async (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-  const { title, keywords, whichYear, description, url, h1, content, schemaImgUrl, checkedOptions, faqRealHtmlNormalCheckedorUnchecked, finalHtmlContent, finalHtmlContentAMP, faqRealHtmlNormalAMPCheckedorUnchecked } = req.body
-console.log(req.body)
+  const { title, keywords, whichYear, description, url, h1, content, schemaImgUrl, checkedOptions, faqRealHtmlNormalCheckedorUnchecked, finalHtmlContent, finalHtmlContentAMP, faqRealHtmlNormalAMPCheckedorUnchecked ,FaqBt } = req.body
+    console.log(req.body)
   const data = checkedOptions
 
 
@@ -156,7 +156,7 @@ console.log(req.body)
   let imgresp = whichYear == "2023" ? "/images/horoscope-2023.jpg" : whichYear == "2024" ? "/images/horoscope-predictions-qoute-english.jpg" : ""
   const conditonalSchemaImage = schemaImgUrl === "" ? imgresp : schemaImgUrl
 
-  console.log(profilename);
+  // console.log(profilename);
 
 
   // console.log(req.body)
@@ -212,15 +212,25 @@ console.log(req.body)
 
  const jsonDataFilePath = path.join(__dirname, '../savedData', `${removeExtension(url)}.json`);
  fs.writeFileSync(jsonDataFilePath, JSON.stringify(req.body, null, 2), 'utf-8');
-
- res.json({ message: 'Template and data saved successfully.' });
-  res.json({ message: 'Template saved successfully.' });
-
 });
 
 
 router.get('/api/savedfiles', (req, res) => {
 const dataFolderPath = path.join(process.cwd(), 'savedData'); // Path to your data folder
+
+  try {
+    // Read the list of files in the "savedData" folder
+    const fileNames = fs.readdirSync(dataFolderPath);
+
+    // Send the file names as a JSON response
+    res.status(200).json({ fileNames });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
+router.get('/api/savedPages', (req, res) => {
+const dataFolderPath = path.join(process.cwd(), 'savedPages/amp'); // Path to your data folder
 
   try {
     // Read the list of files in the "savedData" folder

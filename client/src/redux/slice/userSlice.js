@@ -5,13 +5,13 @@ import { createSlice } from '@reduxjs/toolkit';
 const userSlice = createSlice({
   name: 'userr',
   initialState: {
-    title: "title",
+    title: "",
     keywords: "",
     description: "",
     url: "",
     h1: "",
     schemaImgUrl: "",
-    content: "",
+    content: "dummy content",
     FaqBt: "",
     ImageAlt: "",
     year: "",
@@ -20,6 +20,8 @@ const userSlice = createSlice({
     isCheckedImage: false, // Initialize to false
     isCheckedFAQ: false, // Initialize to false
     whichYear: "",
+    editorData:"" ,
+    formattedHTML:""
   },
   reducers: {
     updateuserr: (state, action) => {

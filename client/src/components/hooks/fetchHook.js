@@ -1,6 +1,3 @@
-// hooks/useFetch.js
-
-'use client'
 import { useState, useEffect } from 'react';
 
 function useFetch(url) {
@@ -8,28 +5,28 @@ function useFetch(url) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url);
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const responseData = await response.json();
-        setData(responseData);
-        setIsLoading(false);
-      } catch (error) {
-        setError(error);
-        setIsLoading(false);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
 
-    fetchData();
+      const responseData = await response.json();
+      setData(responseData);
+      setIsLoading(false);
+    } catch (error) {
+      setError(error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(); // Fetch data when the component first mounts
   }, [url]);
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, fetchData }; // Return fetchData function
 }
 
 export default useFetch;

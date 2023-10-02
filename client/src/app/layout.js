@@ -1,6 +1,7 @@
 import Providers from '@/redux/Provider/Provider'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import '@ckeditor/ckeditor5-basic-styles/theme/code.css'
 
 const inter = Inter({ subsets: ['latin'] })
 

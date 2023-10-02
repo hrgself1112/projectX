@@ -1,14 +1,80 @@
 'use client'
 import useFetch from "@/components/hooks/fetchHook";
 import { AuthorByLangskeletons, AuthorByNameskeletons } from "@/components/skeletons/skeletons";
-// import {  } from "@/components/proMap";
 import React, { useState, useEffect } from "react";
-
 import { updateuserr } from '@/redux/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import CkEditorProjectX from "@/components/ckEditor/ckEditorProjectX";
 
+
+const beautify = require('js-beautify').html;
 
 export const Form = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.userr);
+
+  const {title ,
+    keywords
+    ,description
+    ,url
+    ,h1
+    ,schemaImgUrl
+    ,content
+    ,FaqBt
+    ,ImageAlt
+    ,year
+    ,checkedOptions
+    ,selectedLanguage
+    ,isCheckedImage
+    ,isCheckedFAQ
+    ,whichYear ,
+    formattedHTML ,
+    editorData 
+  } = user;
+
+
+  // Handle CKEditor content change
+  const handleEditorChange = (newData) => {
+    // setEditorData(newData);
+    dispatch(updateuserr({ editorData: newData }));
+  };
+
+// Function to remove empty tags, tags like <p>&nbsp;</p>, and all occurrences of &nbsp;
+const processFormattedHTML = (html) => {
+  // Remove empty tags
+  
+  // Remove <p>&nbsp;</p>
+  const withoutNbspParagraphs = html.replace(/<p>(&nbsp;|\s*)<\/p>/g, '');
+
+  // Remove <p> </p>
+  const withoutSpaceParagraphs = withoutNbspParagraphs.replace(/<p>\s*<\/p>/g, '');
+
+  return withoutSpaceParagraphs;
+};
+
+
+  
+  useEffect(() => {
+    // Format the CKEditor content with js-beautify
+    try {
+      const formatted = beautify(editorData, {
+        indent_size: 2,
+      });
+
+      // Process the formatted HTML to replace empty tags
+      const processedHTML = processFormattedHTML(formatted);
+      // dispatch(updateuserr({ ...user, formattedHTML: processedHTML }));
+      dispatch(updateuserr({ ...user, content: processedHTML }));
+      
+      
+      
+    } catch (error) {
+      console.error('Error formatting HTML:', error);
+      dispatch(updateuserr({ ...user, formattedHTML: editorData }));
+    }
+    
+  }, [editorData]);
+
   function removeJsonExtension(fileNames) {
     // Use the `replace` method with a regular expression to remove ".json"
     const withoutExtension = fileNames.replace(/\.json$/, '');
@@ -47,28 +113,11 @@ export const Form = () => {
   };
 
 
-  const dispatch = useDispatch();
-  const user= useSelector((state) => state.userr);
 
   // Update form data in Redux store when inputs change
 
 
   // Use formData from Redux store instead of local state
-  const {title ,
-    keywords
-    ,description
-    ,url
-    ,h1
-    ,schemaImgUrl
-    ,content
-    ,FaqBt
-    ,ImageAlt
-    ,year
-    ,checkedOptions
-    ,selectedLanguage
-    ,isCheckedImage
-    ,isCheckedFAQ
-    ,whichYear /* other form fields */ } = user;
 
  
 
@@ -141,12 +190,12 @@ export const Form = () => {
 
 
   const PostData = async (e) => {
-
     e.preventDefault();
+
     const { title, keywords, description, url, h1, whichYear, schemaImgUrl, content, checkedOptions, FaqBt, selectedLanguage, ImageAlt } = user;
+    
 
 
-    console.log(whichYear)
     // Split the inputText into an array of lines
     const inputText = FaqBt
     const lines = inputText.split('\n');
@@ -287,34 +336,42 @@ export const Form = () => {
 
 
 
-    const res = await fetch("http://localhost:8080/register", {
+    const response = await fetch("http://localhost:8080/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title,
-        keywords,
-        description,
-        url,
-        h1,
-        schemaImgUrl,
-        content,
-        ImageAlt,
-        checkedOptions,
-        faqRealHtmlNormalCheckedorUnchecked,
-        selectedLanguage,
-        finalHtmlContent,
-        finalHtmlContentAMP,
-        faqRealHtmlNormalAMPCheckedorUnchecked,
-        whichYear
+       
+          title,
+          keywords,
+          description,
+          url,
+          h1,
+          schemaImgUrl,
+          content, 
+          ImageAlt, 
+          checkedOptions ,
+          faqRealHtmlNormalCheckedorUnchecked ,
+         selectedLanguage , 
+         finalHtmlContent ,
+         finalHtmlContentAMP ,
+         faqRealHtmlNormalAMPCheckedorUnchecked,
+         whichYear , 
+         FaqBt
+         
 
       }),
     });
-
-    const ResData = await res.json();
-    // console.log(ResData.status);
-  }
+      
+    if (response.ok) {
+      console.log('Form Data saved successfully');
+    } else {
+      console.error('Error saving data');
+    }
+      
+      
+       }
 
 
 
@@ -324,7 +381,6 @@ export const Form = () => {
   return (
 
     <>
-
 
 
       <section className="p-5">
@@ -434,19 +490,19 @@ export const Form = () => {
                 </div>
 
 
-                <div className="mb-4 px-5">
+                {/* <div className="mb-4 px-5">
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     Content
                     <textarea onChange={(e) => handleTextarea("content", e.target.value)} value={user.content} name="content" className="py-3 px-4 block w-full border-2 border-gray-300 rounded-md text-sm focus:border-blue-500 focus-visible:ring-blue-500 light:bg-slate-900 " rows={5} placeholder="<>div content here</>" />
                   </label>
-                </div>
+                </div> */}
 
-
-
-
-
+<div style={{    padding:" 0px 1.2rem" ,
+    marginBottom: "1.2rem"
+}}>
+                <CkEditorProjectX data={content} onChange={handleEditorChange} />
+</div>
                 <div className="mb-4 px-5 gridMakerLang ">
-
                   <input id="hs-medium-switch" className="relative shrink-0 w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-green-200   rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-green-600 focus:ring-green-200 ring-offset-white focus:outline-none appearance-none dark:bg-gray-300 dark:checked:bg-green-600 dark:focus:ring-offset-gray-100  before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-[2px] before:translate-y-[1px] checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-green-200 " type="checkbox" checked={user.isCheckedFAQ} onChange={handleFAQChecked} />
                   <label for="hs-medium-switch" className="text-sm text-gray-500 ml-3 dark:text-gray-400"> FAQ
                   </label>
@@ -514,7 +570,7 @@ export const Form = () => {
                 <div className="mb-4 px-5">
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     Frequently Asked Question
-                    <textarea onChange={(e) => handleTextarea("FaqBt", e.target.value)} value={user.FaqBt} name="FaqBt" className="py-3 px-4 block w-full border-2 border-gray-300 rounded-md text-sm focus:border-blue-500 focus-visible:ring-blue-500 light:bg-slate-900 " rows={5} placeholder="/q+ =Question    /a+ =Answer" />
+                    <textarea onChange={(e) => handleTextarea("FaqBt", e.target.value)} value={FaqBt} name="FaqBt" className="py-3 px-4 block w-full border-2 border-gray-300 rounded-md text-sm focus:border-blue-500 focus-visible:ring-blue-500 light:bg-slate-900 " rows={5} placeholder="/q+ =Question    /a+ =Answer" />
                   </label>
                 </div>
 

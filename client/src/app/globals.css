@@ -1,6 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* // styles/globals.css (or any other CSS file) */
+/* @import '; */
+/* @ckeditor/ckeditor5-basic-styles/theme/greentheme.css */
+/* styles/globals.css */
+/* Import the CKEditor theme CSS file */
+
+/* Your other global styles go here */
+
 /* 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -45,7 +53,29 @@ scale:1.1;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.ck-editor__main{
+  height: 25rem;
+  overflow-y: scroll;
+}
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
 
+  height: 100%;
+}
+.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+
+  height: 100%;
+}
+
+
+.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+  border-radius: 8px 8px 0px 0px;
+  border: 2px solid #d1d5db;
+}
+
+.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+  border-radius: 0px 0px 8px 8px;
+  border: 2px solid #d1d5db;
+}
 .buttonlikeus {
   --background: #de5555;
   --background-hover: #b14545;
@@ -237,8 +267,8 @@ scale:1.1;
   --check-scale: 1;
   --check-y: 16px;
   --check-delay: 1.7s;
-  --checkmark-delay: 2.1s;
-  --check-duration: 0.55s;
+  --checkmark-delay: 1.2s;
+  --check-duration: 0.3s;
   --check-duration-opacity: 0.3s;
 }
 .buttonlikeus.deletelikeus .trashlikeus:before, .buttonlikeus.deletelikeus .trashlikeus:after {
@@ -252,10 +282,10 @@ scale:1.1;
   --r: -40deg;
 }
 .buttonlikeus.deletelikeus .trashlikeus .toplikeus .paperlikeus {
-  animation: paper 1.5s linear forwards 0.5s;
+  animation: paper 0.5s linear forwards 0.3s;
 }
 .buttonlikeus.deletelikeus .trashlikeus .boxlikeus:after {
-  animation: cut 1.5s linear forwards 0.5s;
+  animation: cut 0.5s linear forwards 0.3s;
 }
 .buttonlikeus.deletelikeus, .buttonlikeus:hover {
   --btn: var(--background-hover);
