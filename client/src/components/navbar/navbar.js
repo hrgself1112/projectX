@@ -55,7 +55,7 @@ const Navbar = () => {
         <div id="hs-overlay-example" className="hs-overlay hs-overlay-open:translate-x-0 hidden -translate-x-full fixed top-0 left-0 transition-all duration-300 transform h-full max-w-xs  w-full z-[60] bg-white border-r dark:bg-gray-900 dark:border-gray-700 " tabIndex={-1}>
 
 
-          <nav className="hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open="false">
+          <nav className="hs-accordion-group makignitscroll p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open="false">
             <ul className="space-y-1.5">
 
 

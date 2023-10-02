@@ -354,3 +354,12 @@ body .twitterlikeus svg {
   border-radius: 50%;
   padding: 9px;
 }
+
+.makignitscroll {
+  height: calc( 100% - 8rem );
+  overflow-y:scroll ;
+}
+.makignitscrollnew {
+  height: calc( 100% - 10rem );
+  overflow-y:scroll ;
+}
