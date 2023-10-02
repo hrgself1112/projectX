@@ -363,7 +363,9 @@ const processFormattedHTML = (html) => {
 
       }),
     });
-      
+    if (!response.ok) {
+      throw new Error("Response is not good")
+    }
     if (response.ok) {
       console.log('Form Data saved successfully');
     } else {
@@ -385,7 +387,7 @@ const processFormattedHTML = (html) => {
 
       <section className="p-5">
         <div className="container">
-          <form method="POST">
+          <form onSubmit={PostData}>
 
 
             <div className="flex flex-wrap">
@@ -490,12 +492,6 @@ const processFormattedHTML = (html) => {
                 </div>
 
 
-                {/* <div className="mb-4 px-5">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Content
-                    <textarea onChange={(e) => handleTextarea("content", e.target.value)} value={user.content} name="content" className="py-3 px-4 block w-full border-2 border-gray-300 rounded-md text-sm focus:border-blue-500 focus-visible:ring-blue-500 light:bg-slate-900 " rows={5} placeholder="<>div content here</>" />
-                  </label>
-                </div> */}
 
 <div style={{    padding:" 0px 1.2rem" ,
     marginBottom: "1.2rem"
@@ -674,7 +670,7 @@ const processFormattedHTML = (html) => {
 
 
               <div className="flex px-3 items-center  w-[100%] my-10 justify-center">
-                <input className="      bg-blue-500 hover:cursor-pointer w-[40%] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" onClick={PostData} value="submit" />
+                <input className="      bg-blue-500 hover:cursor-pointer w-[40%] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit"  value="submit" />
               </div>
             </div>
           </form>
