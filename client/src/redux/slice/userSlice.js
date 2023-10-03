@@ -11,7 +11,7 @@ const userSlice = createSlice({
     url: "",
     h1: "",
     schemaImgUrl: "",
-    content: "dummy content",
+    content: "<p>checkingthis data </p>",
     FaqBt: "",
     ImageAlt: "",
     year: "",

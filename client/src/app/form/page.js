@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { updateuserr } from '@/redux/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import CkEditorProjectX from "@/components/ckEditor/ckEditorProjectX";
+import Page from "../upload/page";
 
 
 const beautify = require('js-beautify').html;
@@ -388,6 +389,7 @@ const processFormattedHTML = (html) => {
       <section className="p-5">
         <div className="container">
           <form onSubmit={PostData}>
+
 
 
             <div className="flex flex-wrap">

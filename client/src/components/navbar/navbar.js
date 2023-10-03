@@ -3,6 +3,7 @@ import Buttons from "../button/buttons";
 import React, { useState, useEffect } from "react";
 import { RightSideBarskeletons } from "../skeletons/skeletons";
 import useFetch from "@/components/hooks/fetchHook";
+import Page from "@/app/upload/page";
 
 
 const Navbar = () => {
@@ -49,8 +50,12 @@ const Navbar = () => {
               <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
             </svg>
           </button>
-        </div>
 
+          <div className="inline-block ml-10">
+          <Page/>
+          </div>
+
+        </div>
 
         <div id="hs-overlay-example" className="hs-overlay hs-overlay-open:translate-x-0 hidden -translate-x-full fixed top-0 left-0 transition-all duration-300 transform h-full max-w-xs  w-full z-[60] bg-white border-r dark:bg-gray-900 dark:border-gray-700 " tabIndex={-1}>
 
