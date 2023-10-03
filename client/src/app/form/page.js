@@ -14,23 +14,23 @@ export const Form = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userr);
 
-  const {title ,
+  const { title,
     keywords
-    ,description
-    ,url
-    ,h1
-    ,schemaImgUrl
-    ,content
-    ,FaqBt
-    ,ImageAlt
-    ,year
-    ,checkedOptions
-    ,selectedLanguage
-    ,isCheckedImage
-    ,isCheckedFAQ
-    ,whichYear ,
-    formattedHTML ,
-    editorData 
+    , description
+    , url
+    , h1
+    , schemaImgUrl
+    , content
+    , FaqBt
+    , ImageAlt
+    , year
+    , checkedOptions
+    , selectedLanguage
+    , isCheckedImage
+    , isCheckedFAQ
+    , whichYear,
+    formattedHTML,
+    editorData
   } = user;
 
 
@@ -40,21 +40,21 @@ export const Form = () => {
     dispatch(updateuserr({ editorData: newData }));
   };
 
-// Function to remove empty tags, tags like <p>&nbsp;</p>, and all occurrences of &nbsp;
-const processFormattedHTML = (html) => {
-  // Remove empty tags
-  
-  // Remove <p>&nbsp;</p>
-  const withoutNbspParagraphs = html.replace(/<p>(&nbsp;|\s*)<\/p>/g, '');
+  // Function to remove empty tags, tags like <p>&nbsp;</p>, and all occurrences of &nbsp;
+  const processFormattedHTML = (html) => {
+    // Remove empty tags
 
-  // Remove <p> </p>
-  const withoutSpaceParagraphs = withoutNbspParagraphs.replace(/<p>\s*<\/p>/g, '');
+    // Remove <p>&nbsp;</p>
+    const withoutNbspParagraphs = html.replace(/<p>(&nbsp;|\s*)<\/p>/g, '');
 
-  return withoutSpaceParagraphs;
-};
+    // Remove <p> </p>
+    const withoutSpaceParagraphs = withoutNbspParagraphs.replace(/<p>\s*<\/p>/g, '');
+
+    return withoutSpaceParagraphs;
+  };
 
 
-  
+
   useEffect(() => {
     // Format the CKEditor content with js-beautify
     try {
@@ -66,14 +66,14 @@ const processFormattedHTML = (html) => {
       const processedHTML = processFormattedHTML(formatted);
       // dispatch(updateuserr({ ...user, formattedHTML: processedHTML }));
       dispatch(updateuserr({ ...user, content: processedHTML }));
-      
-      
-      
+
+
+
     } catch (error) {
       console.error('Error formatting HTML:', error);
       dispatch(updateuserr({ ...user, formattedHTML: editorData }));
     }
-    
+
   }, [editorData]);
 
   function removeJsonExtension(fileNames) {
@@ -120,7 +120,7 @@ const processFormattedHTML = (html) => {
 
   // Use formData from Redux store instead of local state
 
- 
+
 
   const { data: LangAuthorr, isLoading: LangAuthorrisLoading, error: LangAuthorrerror } = useFetch('http://localhost:8080/api/data/databylanguagename'); // Adjust the URL
   const { data: AuthorMains, isLoading: AuthorMainsisLoading, error: AuthorMainserror } = useFetch('http://localhost:8080/api/data/databyauthorname'); // Adjust the URL
@@ -146,7 +146,7 @@ const processFormattedHTML = (html) => {
 
 
   const handleYearChange = (year) => {
-    dispatch(updateuserr(({...user, whichYear: year,})));
+    dispatch(updateuserr(({ ...user, whichYear: year, })));
   };
   const handleCheckboxChange = (e) => {
     dispatch(updateuserr({ ...user, isCheckedImage: e.target.checked }));
@@ -157,7 +157,7 @@ const processFormattedHTML = (html) => {
   // Event handler for the radio buttons
   const handleRadioChange = (event) => {
     dispatch(updateuserr({ ...user, selectedLanguage: event.target.value }));
-    
+
   };
 
   const handleCheckbox = (name, checked) => {
@@ -185,7 +185,7 @@ const processFormattedHTML = (html) => {
   };
 
 
-  const handleTextarea = (name ,  value ) => {
+  const handleTextarea = (name, value) => {
     dispatch(updateuserr({ [name]: value }));
   };
 
@@ -194,7 +194,7 @@ const processFormattedHTML = (html) => {
     e.preventDefault();
 
     const { title, keywords, description, url, h1, whichYear, schemaImgUrl, content, checkedOptions, FaqBt, selectedLanguage, ImageAlt } = user;
-    
+
 
 
     // Split the inputText into an array of lines
@@ -343,24 +343,24 @@ const processFormattedHTML = (html) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-       
-          title,
-          keywords,
-          description,
-          url,
-          h1,
-          schemaImgUrl,
-          content, 
-          ImageAlt, 
-          checkedOptions ,
-          faqRealHtmlNormalCheckedorUnchecked ,
-         selectedLanguage , 
-         finalHtmlContent ,
-         finalHtmlContentAMP ,
-         faqRealHtmlNormalAMPCheckedorUnchecked,
-         whichYear , 
-         FaqBt
-         
+
+        title,
+        keywords,
+        description,
+        url,
+        h1,
+        schemaImgUrl,
+        content,
+        ImageAlt,
+        checkedOptions,
+        faqRealHtmlNormalCheckedorUnchecked,
+        selectedLanguage,
+        finalHtmlContent,
+        finalHtmlContentAMP,
+        faqRealHtmlNormalAMPCheckedorUnchecked,
+        whichYear,
+        FaqBt
+
 
       }),
     });
@@ -372,9 +372,9 @@ const processFormattedHTML = (html) => {
     } else {
       console.error('Error saving data');
     }
-      
-      
-       }
+
+
+  }
 
 
 
@@ -398,7 +398,7 @@ const processFormattedHTML = (html) => {
 
 
 
-              {/* <textarea rows="" name='title' onChange={handleInputChange} cols=""></textarea> */}
+                {/* <textarea rows="" name='title' onChange={handleInputChange} cols=""></textarea> */}
 
 
 
@@ -408,7 +408,7 @@ const processFormattedHTML = (html) => {
                     <div className="mb-4">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                         Title
-                      </label> 
+                      </label>
                       <textarea name="title" onChange={(e) => handleTextarea("title", e.target.value)} value={user.title} className="py-3 px-4 block w-full border-2 border-gray-300 rounded-md text-sm focus:border-blue-500 focus-visible:ring-blue-500 light:bg-slate-900 " id="name" type="text" placeholder="Enter Title Here" />
                     </div>
                   </div>
@@ -457,20 +457,20 @@ const processFormattedHTML = (html) => {
                 </div>
 
 
-                
 
-       
+
+
 
                 <div className="flex mx-4 my-5 w-1/3 items-center">
-                              <input id={`ImagecCheck`} className="relative shrink-0 w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-green-200   rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-green-600 focus:ring-green-200 ring-offset-white focus:outline-none appearance-none dark:bg-gray-300 dark:checked:bg-green-600 dark:focus:ring-offset-gray-100  before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-[2px] before:translate-y-[1px] checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-green-200 "
-                                type="checkbox"
-                                checked={user.isCheckedImage}
-                                onChange={handleCheckboxChange}
-                              />
-                              <label for={`ImagecCheck`} className="text-sm cursor-pointer text-gray-500 ml-3 dark:text-gray-400">
-                                Image 
-                              </label>
-                            </div>
+                  <input id={`ImagecCheck`} className="relative shrink-0 w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-green-200   rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-green-600 focus:ring-green-200 ring-offset-white focus:outline-none appearance-none dark:bg-gray-300 dark:checked:bg-green-600 dark:focus:ring-offset-gray-100  before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-[2px] before:translate-y-[1px] checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-green-200 "
+                    type="checkbox"
+                    checked={user.isCheckedImage}
+                    onChange={handleCheckboxChange}
+                  />
+                  <label for={`ImagecCheck`} className="text-sm cursor-pointer text-gray-500 ml-3 dark:text-gray-400">
+                    Image
+                  </label>
+                </div>
 
                 <div className="flex flex-wrap">
 
@@ -495,11 +495,12 @@ const processFormattedHTML = (html) => {
 
 
 
-<div style={{    padding:" 0px 1.2rem" ,
-    marginBottom: "1.2rem"
-}}>
-                <CkEditorProjectX data={content} onChange={handleEditorChange} />
-</div>
+                <div style={{
+                  padding: " 0px 1.2rem",
+                  marginBottom: "1.2rem"
+                }}>
+                  <CkEditorProjectX data={content} onChange={handleEditorChange} />
+                </div>
                 <div className="mb-4 px-5 gridMakerLang ">
                   <input id="hs-medium-switch" className="relative shrink-0 w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-green-200   rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-green-600 focus:ring-green-200 ring-offset-white focus:outline-none appearance-none dark:bg-gray-300 dark:checked:bg-green-600 dark:focus:ring-offset-gray-100  before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-[2px] before:translate-y-[1px] checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-green-200 " type="checkbox" checked={user.isCheckedFAQ} onChange={handleFAQChecked} />
                   <label for="hs-medium-switch" className="text-sm text-gray-500 ml-3 dark:text-gray-400"> FAQ
@@ -672,7 +673,7 @@ const processFormattedHTML = (html) => {
 
 
               <div className="flex px-3 items-center  w-[100%] my-10 justify-center">
-                <input className="      bg-blue-500 hover:cursor-pointer w-[40%] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit"  value="submit" />
+                <input className="      bg-blue-500 hover:cursor-pointer w-[40%] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="submit" />
               </div>
             </div>
           </form>

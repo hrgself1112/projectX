@@ -30,7 +30,8 @@
     "searchMarathi": true,
     "profilename": "Yogita Palod",
     "profileUrl": "https://horoscope.astrosage.com/yogita-palod/",
-    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/02/yogita-1.jpg"
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/02/yogita-1.jpg",
+    "FaqLangH2": "नेहमी विचारले जाणारे प्रश्न"
   },
   "Malayalam": {
     "uniqueFindingKey": "searchMalayalam",
@@ -71,7 +72,8 @@
     "searchBengali": true,
     "profilename": "Pallabi Pal",
     "profileUrl": "https://horoscope.astrosage.com/pallabi-pal/",
-    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/02/pallabi-1.jpg"
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/02/pallabi-1.jpg",
+    "FaqLangH2": "সর্বদা জিজ্ঞেস করণীয় প্রশ্ন"
   },
   "Urdu": {
     "uniqueFindingKey": "searchUrdu",
