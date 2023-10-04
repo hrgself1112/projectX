@@ -13,6 +13,11 @@ const Page = () => {
     const [fileLoaded, setFileLoaded] = useState(false);
     const [btndisabled, setbtndisabled] = useState(true);
 
+    
+          // Helper function to remove HTML tags and handle special characters
+          function cleanTextNewwer(text) {
+            return text.replace(/&nbsp;/g, '').trim();
+        }
     const { title,
         keywords
         , description
@@ -116,6 +121,11 @@ const Page = () => {
             H1: "",
         };
 
+
+          // Helper function to remove HTML tags and handle special characters
+    function cleanText(text) {
+        return text.replace(/<\/?strong>/g, '').replace(/&nbsp;/g, '').trim();
+    }
         // Extract data using regular expressions
         // const titleMatch = htmlContent.match(/<strong>Title:<\/strong>\s*([^<]+)/i);
         
@@ -130,32 +140,33 @@ const Page = () => {
                 
 
         const onetitleMatch = htmlContent.match(/Title:\s*([^<]+)/i);
-        const onekeywordsMatch = htmlContent.match(/(?:<strong>)?Keywords:(?:<\/strong>)?\s*([^<]+)/i);
-        const oneurlMatch = htmlContent.match(/(?:<strong>)?URL:(?:<\/strong>)?\s*<a\s+[^>]*href="([^"]+)"/i);
-        const oneurlMatchN = htmlContent.match(/(?:<strong>)?URL:(?:<\/strong>)?\s*<a\s+[^>]*href="([^"]+)"/i);
-        const onealtMatch = htmlContent.match(/(?:<strong>)?Alt:(?:<\/strong>)?\s*([^<]+)/i);
-        const onedesMatch = htmlContent.match(/(?:<strong>)?Description:(?:<\/strong>)?\s*([^<]+)/i);
-        const onedesMatcht = htmlContent.match(/(?:<strong>)?Des:(?:<\/strong>)?\s*([^<]+)/i);
-        const oneh1Match = htmlContent.match(/(?:<strong>)?H1:(?:<\/strong>)?\s*([^<]+)/i);
-        const oneAltMatch = htmlContent.match(/(?:<strong>)?Alt:(?:<\/strong>)?\s*([^<]+)/i);
+        const onekeywordsMatch = htmlContent.match(/Keywords:\s*([^<]+)/i);
+        const oneurlMatch = htmlContent.match(/URL:\s*<a\s+[^>]*href="([^"]+)"/i);
+        const oneurlMatchN = htmlContent.match(/URL: \s*<a\s+[^>]*href="([^"]+)"/i);
+        const onealtMatch = htmlContent.match(/Alt:\s*([^<]+)/i);
+        const onedesMatch = htmlContent.match(/Description:\s*([^<]+)/i);
+        const onedesMatcht = htmlContent.match(/Des:\s*([^<]+)/i);
+        const oneh1Match = htmlContent.match(/H1:\s*([^<]+)/i);
+        const oneAltMatch = htmlContent.match(/Alt:\s*([^<]+)/i);
         
 
 
         if (titleMatch) {
-            dataObject.title = titleMatch[1].trim();
+            dataObject.title = cleanText(titleMatch[1])
         }
         if (onetitleMatch) {
-            dataObject.title = onetitleMatch[1].trim();
+            dataObject.title = cleanText(onetitleMatch[1])
         }
 
         if (AltMatch) {
-            dataObject.Alt = AltMatch[1].trim();
+            dataObject.Alt = cleanText(AltMatch[1])
         }
         if (oneAltMatch) {
-            dataObject.Alt = oneAltMatch[1].trim();
+            dataObject.Alt = cleanText(oneAltMatch[1])
         }
         if (oneurlMatchN) {
-            let dataObjectnew = oneurlMatchN[1].trim();           
+            let dataObjectnew = cleanText(oneurlMatchN[1])      
+            console.log(dataObjectnew)     
             let an = extractFileNamesFromUrls(dataObjectnew)
             console.log(an)
             dataObject.URL = an
@@ -163,22 +174,24 @@ const Page = () => {
 
 
         if (keywordsMatch) {
-            const keywords = keywordsMatch[1].trim();
+            const keywords = cleanText(keywordsMatch[1])
             dataObject.keywords = keywords.replace(/<\/?strong>/g, ''); // Remove <strong> tags
         }
         
         if (onekeywordsMatch) {
-            dataObject.keywords = onekeywordsMatch[1].trim();
+            dataObject.keywords = cleanText(onekeywordsMatch[1])
         }
 
         if (urlMatch) {
-            let dataObjectnew = urlMatch[1].trim();           
+            let dataObjectnew = cleanText(urlMatch[1])         
+            console.log(dataObjectnew)  
             let an = extractFileNamesFromUrls(dataObjectnew)
             console.log(an)
             dataObject.URL = an
         }
         if (oneurlMatch) {
-            let dataObjectnew = oneurlMatch[1].trim();           
+            let dataObjectnew = cleanText(oneurlMatch[1])     
+            console.log(dataObjectnew)      
             let an = extractFileNamesFromUrls(dataObjectnew)
             console.log(an)
             dataObject.URL = an
@@ -187,34 +200,34 @@ const Page = () => {
 
         
         if (desMatcht) {
-            const keywords = desMatch[1].trim();
+            const keywords = cleanText(desMatch[1])
             dataObject.Des = keywords.replace(/<\/?strong>/g, ''); // Remove <strong> tags
         }
         if (onedesMatcht) {
-            dataObject.Des = onedesMatcht[1].trim();
+            dataObject.Des = cleanText(onedesMatcht[1])
     }
    
    
         if (altMatch) {
-            dataObject.Alt = altMatch[1].trim();
+            dataObject.Alt = cleanText(altMatch[1])
         }
         if (onealtMatch) {
-            dataObject.Alt = onealtMatch[1].trim();
+            dataObject.Alt = cleanText(onealtMatch[1])
         }
 
         if (desMatch) {
-            const keywords = desMatch[1].trim();
+            const keywords = cleanText(desMatch[1])
             dataObject.Des = keywords.replace(/<\/?strong>/g, ''); // Remove <strong> tags
         }
         if (onedesMatch) {
-            dataObject.Des = onedesMatch[1].trim();
+            dataObject.Des = cleanText(onedesMatch[1])
         }
 
         if (h1Match) {
-            dataObject.H1 = h1Match[1].trim();
+            dataObject.H1 = cleanText(h1Match[1])
         }
         if (oneh1Match) {
-            dataObject.H1 = oneh1Match[1].trim();
+            dataObject.H1 = cleanText(oneh1Match[1])
         }
 
         return dataObject;
@@ -260,10 +273,16 @@ const Page = () => {
 
     }
 
-
+function SetContent(){
+    setRenderedDoc(cleanTextNewwer(content))
+    console.log(content)
+    console.log(renderedDoc)
+}
+    
 
     useEffect(() => {
         dispatch(updateuserr({ content: clear }));
+
     }, [clear, data])
 
     return (
@@ -281,16 +300,22 @@ const Page = () => {
     " onChange={(e) => parseWordDocxFile(e.target)}
                     />
                 </label>
+
+                <div className="mx-5">
+                <button onClick={SetContent}
+className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-400 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 ">Set Content</button>
+                </div>
                 <button
                     className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 disabled:bg-green-800"
                     onClick={handleButtonClick}
-                    disabled={!fileLoaded} // Disable the button if fileLoaded is false
+                     // Disable the button if fileLoaded is false
                 >
                     {loading ? <>
                         <span class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading"></span>
                         Uploading  </>
                         : 'Extract Data'}
                 </button>
+
             </div>
 
         </>

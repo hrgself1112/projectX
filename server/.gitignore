@@ -6,6 +6,7 @@
 .pnp.js
 
 /savedPages
+/savedData
 
 # testing
 /coverage
