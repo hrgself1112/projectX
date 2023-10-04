@@ -18,7 +18,12 @@ const getCurrentFormattedDate = () => {
   const dayOfMonth = currentDate.getDate();
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
-  return `${dayOfWeek}, ${dayOfMonth} ${monthNames[month]} ${year}`;
+
+  // Add leading zeros for dayOfMonth if it's less than 10
+  const formattedDayOfMonth = dayOfMonth < 10 ? `0${dayOfMonth}` : dayOfMonth;
+
+  return `${dayOfWeek}, ${formattedDayOfMonth} ${monthNames[month]} ${year}`;
+
 };
 
 const getCurrentFormattedTime = () => {

@@ -4,8 +4,7 @@
 <head>
     <!--#include virtual="/include/topmeta.asp"-->
     <link rel="amphtml" href="https://www.astrosage.com/<%= whichYear%>/amp/<%= url%>">
-    <title><%= title %></title>
-    <meta name="keywords" content="<%= keywords%>" />
+    <title><%= title %></title><%- finalKeywords%>
     <meta name="description" content="<%= description %>" />
     <script type="application/ld+json">{"@context": "https://schema.org/","@type": "BreadcrumbList","itemListElement": [{"@type":"ListItem", "position": 1,"name":"Home","item":"https://www.astrosage.com/" },{"@type":"ListItem", "position": 2,"name":"<%= whichYear%>","item":"https://www.astrosage.com/<%= whichYear%>/" },{"@type":"ListItem", "position": 3,"name":"<%= title %>","item":"https://www.astrosage.com/<%= whichYear%>/<%= url%>" }]}</script>
     <script type="application/ld+json">
@@ -64,7 +63,7 @@
                 </div>
             </div>
 
-                                  <%- finalHtmlContent%>
+                                  <%- finalHtmlContentbeautify%>
 
                 
                                  <%- faqRealHtmlNormalCheckedorUnchecked%>

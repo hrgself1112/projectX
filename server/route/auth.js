@@ -16,6 +16,8 @@ const formattedDate = getCurrentFormattedDate();
 const formattedTime = getCurrentFormattedTime();
 const amOrpm = getamOrpm();
 
+console.log(formattedDate)
+console.log(formattedTime)
 
 const FormattedNumberDate = getCurrentFormattedNumberDate();
 
@@ -158,11 +160,21 @@ router.post('/register', (req, res) => {
 
   // console.log(profilename);
 
+  let finalKeywords  = keywords != "" ? `\n\t<meta name="keywords" content="${keywords}" />` : ""
 
+  function beautifyHtml(html) {
+    const beautify = require('js-beautify').html;
+    return beautify(html, {
+      indent_size: 6,
+      preserve_newlines: true, // Preserve existing line breaks
+      indent_inner_html: true,});
+  }
+    let finalHtmlContentAMPbeautify =  beautifyHtml(finalHtmlContentAMP)
+    let finalHtmlContentbeautify =  beautifyHtml(finalHtmlContent)
   // console.log(req.body)
   const templateData = {
     title,
-    keywords,
+    finalKeywords,
     description,
     url,
     h1,
@@ -181,8 +193,8 @@ router.post('/register', (req, res) => {
     Ressession,
     faqRealHtmlNormalAMPCheckedorUnchecked,
     faqRealHtmlNormalCheckedorUnchecked,
-    finalHtmlContent,
-    finalHtmlContentAMP
+    finalHtmlContentAMPbeautify , 
+    finalHtmlContentbeautify
   };
 
   //  const templatePath = path.join(__dirname, '../views', 'template.ejs');

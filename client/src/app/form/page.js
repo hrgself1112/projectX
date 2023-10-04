@@ -286,18 +286,27 @@ export const Form = () => {
     const finalHtmlContentAMP = modifiedRealContentAMP.join('\n');
 
 
-    const faqElementsAMP = FAQ.map((item, index) => (`{
+    const faqElementsAMP = FAQ.map((item, index) => {
+      return(
+      
+        index == FAQ.length -  1 ?`{
               "@type": "Question",
               "name": "${item.question}",
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "${item.answer}"
               }
-            },`
-    ));
+            }` : `{
+              "@type": "Question",
+              "name": "${item.question}",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "${item.answer}"
+              }
+            },` 
+    )});
 
-    const faqRealHtmlNormalAMP = `
-    <script type="application/ld+json">
+    const faqRealHtmlNormalAMP = `<script type="application/ld+json">
         {
           "@context": "https://schema.org",
           "@type": "FAQPage",
@@ -307,8 +316,7 @@ export const Form = () => {
        `;
 
 
-    const faqElements = FAQ.map((item, index) => (`                 
-           <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    const faqElements = FAQ.map((item, index) => (`<div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
               <h3 itemprop="name">${item.question}</h3>
                 <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                   <div itemprop="text">
@@ -320,8 +328,7 @@ export const Form = () => {
     ));
 
 
-    const faqRealHtmlNormal = `
-    <div class="card-view-content">
+    const faqRealHtmlNormal = `<div class="card-view-content">
       <h2>${user.selectedLanguage != "" ? user.selectedLanguage : user.checkedOptions[0]['FaqLangH2']}</h2>
       <div itemscope itemtype="https://schema.org/FAQPage">
         ${faqElements.join('')}
