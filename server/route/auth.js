@@ -155,7 +155,7 @@ router.post('/register', (req, res) => {
   const Ressession = `<% session("topmenulink")="horoscope" %>`
 
 
-  let imgresp = whichYear == "2023" ? "/images/horoscope-2023.jpg" : whichYear == "2024" ? "/images/horoscope-predictions-qoute-english.jpg" : ""
+  let imgresp = whichYear == "2023" ? "horoscope-2023.jpg" : whichYear == "2024" ? "horoscope-predictions-qoute-english.jpg" : ""
   const conditonalSchemaImage = schemaImgUrl === "" ? imgresp : schemaImgUrl
 
   // console.log(profilename);

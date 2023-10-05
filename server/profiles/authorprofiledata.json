@@ -39,7 +39,8 @@
     "searchMalayalam": true,
     "profilename": "Ashish John",
     "profileUrl": "https://horoscope.astrosage.com/ashish-john/",
-    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/11/ashish-john.jpg"
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/11/ashish-john.jpg",
+    "FaqLangH2": "പതിവായി ചോദിക്കുന്ന ചോദ്യങ്ങൾ"
   },
   "Odia": {
     "uniqueFindingKey": "searchOdia",
