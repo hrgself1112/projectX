@@ -1,42 +1,49 @@
 'use client'
-
 import React from 'react';
-import { updateuserr } from '@/redux/slice/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
 
 
- const Hritik = () => {
-  const dispatch = useDispatch();
-  const users = useSelector((state) => state.userr);
+export async function fetchData() {
+  const res = await fetch('http://localhost:8080/mongodata'); 
+  return await res.json();
+}
 
-  // Update form data in Redux store when inputs change
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    dispatch(updateuserr({ [name]: value }));
-  };
 
-  // Use formData from Redux store instead of local state
-  const { title, keywords, description, url, /* other form fields */ } = users;
 
-  // Render your form using the formData values
-  // ...
-return(
+const handleClick= (e) =>{
+const id  = e.target.id
+console.log(id)
+window.open(`http://localhost:8080/mongodata/${id}` , "_blank")
+fetch(`/mongodata/${id}`)
+    .then((response) => response.json())
+    .then((data) => {    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+    });
+}
+
+ const Hritik = async () => {
+   const data  =  await fetchData()
+   
+  return(
 
     <>
- 
- <textarea rows="" name='title' onChange={handleInputChange} cols=""></textarea>
- <h1>
- {title}
- </h1>
 
-<h2>
- {description}
-</h2>
- 
+{data && data.map((item) => (
+        <div key={item._id}>
+          {/* Display individual data items */}
+          {/* You can access item properties like item.title, item.content, etc. */}
+       <button onClick={handleClick} id={item._id} className="bg-red-100 my-3" >
+           {item.title}
+      </button>
+        </div>
+      ))}
  
      </>
 )
   
 };
+
+
+
 
 export default Hritik

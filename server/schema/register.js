@@ -1,0 +1,84 @@
+// models/someModel.js
+const mongoose = require('mongoose');
+const Articles = mongoose.Schema({
+    title:{
+        type:String
+    },
+    finalKeywords:{
+        type:String
+    },
+    description:{
+        type:String
+    },
+    url:{
+        type:String
+    },
+    h1:{
+        type:String
+    },
+    conditonalSchemaImage:{
+        type:String
+    },
+    content:{
+        type:String
+    },
+    formattedDate:{
+        type:String
+    },
+    formattedTime:{
+        type:String
+    },
+    FormattedNumberDate:{
+        type:String
+    },
+    amOrpm:{
+        type:String
+    },
+    whichYear:{
+        type:String
+    },
+    checkedOptions:{
+        type:Object
+    },
+    profilename:{
+        type:String
+    },
+    profileUrl:{
+        type:String
+    },
+    profileImageUrl:{
+        type:String
+    },
+    ResLineOne:{
+        type:String
+    },
+    Ressession:{
+        type:String
+    },
+    faqRealHtmlNormalAMPCheckedorUnchecked:{
+        type:String
+    },
+    faqRealHtmlNormalCheckedorUnchecked:{
+        type:String
+    },
+    NormalFaq:{
+        type:String
+    },
+    AMPfaq:{
+        type:String
+    },
+    finalHtmlContent:{
+        type:String
+    } ,
+    finalHtmlContentAMP:{
+        type:String
+    },
+},
+    {
+        timestamps:true
+    }
+    );
+
+module.exports = {
+    Articles , 
+};

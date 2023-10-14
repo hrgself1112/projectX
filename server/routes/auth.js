@@ -4,22 +4,11 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
-const { getCurrentFormattedDate, getCurrentFormattedTime, getamOrpm, getCurrentFormattedNumberDate } = require('../utils/date');
-const mammoth = require('mammoth'); // Install this library: npm install mammoth
+const { DatabaseArticles } = require('../models/register');
 
 
 
-const ejs = require('ejs');
-
-// Get the current date and time
-const formattedDate = getCurrentFormattedDate();
-const formattedTime = getCurrentFormattedTime();
-const amOrpm = getamOrpm();
-
-console.log(formattedDate)
-console.log(formattedTime)
-
-const FormattedNumberDate = getCurrentFormattedNumberDate();
+  
 
 // Function to delete all files and subdirectories inside a directory
 function deleteAllFilesAndSubdirectories(directoryPath) {
@@ -59,7 +48,7 @@ router.get('/api/delete/savedData', (req, res) => {
 });
 
 
-router.post('/saveData', async (req, res) => {
+router.post('/saveData',  (req, res) => {
   try {
     const { profilename, profileImageUrl, profileUrl, UniqueKey } = req.body;
 
@@ -140,91 +129,12 @@ router.post('/saveData', async (req, res) => {
   
 });
 
-router.post('/register', (req, res) => {
-  const { title, keywords, whichYear, description, url, h1, content, schemaImgUrl, checkedOptions, faqRealHtmlNormalCheckedorUnchecked, finalHtmlContent, finalHtmlContentAMP, faqRealHtmlNormalAMPCheckedorUnchecked ,FaqBt } = req.body
-    console.log(req.body)
-  const data = checkedOptions
+
+// router.get("/preview/:" ,  (req, res)=>{
+//   res.render('index');
+// })
 
 
-  // Extracting values
-  const firstItem = data[0];
-  const profilename = firstItem.profilename;
-  const profileUrl = firstItem.profileUrl;
-  const profileImageUrl = firstItem.profileImageUrl;
-  const ResLineOne = `<% Response.Charset="utf-8" %>`
-  const Ressession = `<% session("topmenulink")="horoscope" %>`
-
-
-  let imgresp = whichYear == "2023" ? "horoscope-2023.jpg" : whichYear == "2024" ? "horoscope-predictions-qoute-english.jpg" : ""
-  const conditonalSchemaImage = schemaImgUrl === "" ? imgresp : schemaImgUrl
-
-  // console.log(profilename);
-
-  let finalKeywords  = keywords != "" ? `\n\t<meta name="keywords" content="${keywords}" />` : ""
-
-  function beautifyHtml(html) {
-    const beautify = require('js-beautify').html;
-    return beautify(html, {
-      indent_size: 6,
-      preserve_newlines: true, // Preserve existing line breaks
-      indent_inner_html: true,});
-  }
-    let finalHtmlContentAMPbeautify =  beautifyHtml(finalHtmlContentAMP)
-    let finalHtmlContentbeautify =  beautifyHtml(finalHtmlContent)
-  // console.log(req.body)
-  const templateData = {
-    title,
-    finalKeywords,
-    description,
-    url,
-    h1,
-    conditonalSchemaImage,
-    content,
-    formattedDate,
-    formattedTime,
-    FormattedNumberDate,
-    amOrpm,
-    whichYear,
-    checkedOptions,
-    profilename,
-    profileUrl,
-    profileImageUrl,
-    ResLineOne,
-    Ressession,
-    faqRealHtmlNormalAMPCheckedorUnchecked,
-    faqRealHtmlNormalCheckedorUnchecked,
-    finalHtmlContentAMPbeautify , 
-    finalHtmlContentbeautify
-  };
-
-  //  const templatePath = path.join(__dirname, '../views', 'template.ejs');
-  //  const ejsTemplate = fs.readFileSync(templatePath, 'utf-8');
-  const ejsTemplate = fs.readFileSync(path.join(__dirname, '../views/template.ejs'), 'utf-8');
-  const ampejsTemplate = fs.readFileSync(path.join(__dirname, '../views/amptemplate.ejs'), 'utf-8');
-
-  // Render the template with data
-  const renderedTemplate = ejs.render(ejsTemplate, templateData);
-  const amprenderedTemplate = ejs.render(ampejsTemplate, templateData);
-
-  // Write the rendered HTML content to the file
-  fs.writeFileSync(`./savedPages/${url}`, renderedTemplate);
-  fs.writeFileSync(`./savedPages/amp/${url}`, amprenderedTemplate);
-  //  fs.writeFileSync(, htmlContent)
- // Save req.body as a JSON file
-
- function removeExtension(fileName) {
-  // Check if the file name ends with ".asp"
-  if (fileName.endsWith('.asp')) {
-    // Use slice to remove the last 4 characters (".asp")
-    return fileName.slice(0, -4);
-  }
-  // If the file name doesn't end with ".asp", return it as is
-  return fileName;
-}
-
- const jsonDataFilePath = path.join(__dirname, '../savedData', `${removeExtension(url)}.json`);
- fs.writeFileSync(jsonDataFilePath, JSON.stringify(req.body, null, 2), 'utf-8');
-});
 
 
 router.get('/api/savedfiles', (req, res) => {
@@ -241,14 +151,12 @@ const dataFolderPath = path.join(process.cwd(), 'savedData'); // Path to your da
     res.status(500).json({ error: 'Internal server error' });
   }
 })
+
 router.get('/api/savedPages', (req, res) => {
 const dataFolderPath = path.join(process.cwd(), 'savedPages/amp'); // Path to your data folder
 
   try {
-    // Read the list of files in the "savedData" folder
     const fileNames = fs.readdirSync(dataFolderPath);
-
-    // Send the file names as a JSON response
     res.status(200).json({ fileNames });
   } catch (error) {
     console.error(error);

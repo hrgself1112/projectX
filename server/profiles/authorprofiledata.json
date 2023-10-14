@@ -14,7 +14,8 @@
     "searchTelugu": true,
     "profilename": "C.V. Viswanath",
     "profileUrl": "https://horoscope.astrosage.com/c-v-viswanath/",
-    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/02/viswanath.jpg"
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/02/viswanath.jpg",
+    "FaqLangH2": "తరచుగా అడుగు ప్రశ్నలు"
   },
   "Gujarati": {
     "uniqueFindingKey": "searchGujarati",
@@ -56,7 +57,8 @@
     "searchAssamesse": true,
     "profilename": "Lobitha Dutta",
     "profileUrl": "https://horoscope.astrosage.com/lobitha-dutta/",
-    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/11/lobhita-dutta.jpg"
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/11/lobhita-dutta.jpg",
+    "FaqLangH2": "সঘনাই সোধা প্ৰশ্ন"
   },
   "Kannada": {
     "uniqueFindingKey": "searchKannada",
@@ -115,5 +117,13 @@
     "profilename": "Deepika Gola",
     "profileUrl": "https://horoscope.astrosage.com/hindi/deepika-gola/",
     "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/08/dipika-gola.jpg"
+  },
+  "AcharyaHanumanMishra": {
+    "uniqueFindingKey": "searchAcharyaHanumanMishra",
+    "uniqueKey": "AcharyaHanumanMishra",
+    "searchAcharyaHanumanMishra": true,
+    "profilename": "Acharya  Hanuman Mishra",
+    "profileUrl": "https://horoscope.astrosage.com/pandit-hanuman-mishra/",
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2023/03/astrologer-hanuman-mishra-1.jpg"
   }
 }

@@ -3,27 +3,41 @@ const app = express();
 const port = 8080;
 const cors = require('cors');
 const fs = require('fs');
-const session = require('express-session');
-const bodyParser = require('body-parser'); // Import body-parser
+const bodyParser = require('body-parser');
+const { ConnectToMongoDB } = require('./database/connection');
+const  register  = require('./routes/register');
+
+
+
+
+
+
+
+
+ConnectToMongoDB("mongodb://127.0.0.1:27017/Astrosage-CMS").then(()=>{
+  console.log("Database Connect")})
+
 
 app.set('view engine', 'ejs');
 
-app.use(
-  session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
-
-// Increase the payload size limit for JSON requests (adjust 'limit' as needed)
 app.use(express.json({ limit: '50mb' })); // Set your desired payload size limit
 
 app.use(cors());
 
-app.use(require('./route/auth'));
+
+app.use(require('./routes/auth'));
+
+app.set('views', __dirname + '/views');
+
+app.use("/register" , register);
+
+
+
+
+
 
 
 // Define an API endpoint to serve files from the 'data' folder
@@ -79,9 +93,6 @@ app.get('/api/savedfiles/:fileName', (req, res) => {
     });
   });
 });
-
-
-
 
 
 
