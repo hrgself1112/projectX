@@ -157,6 +157,42 @@ const HandleUserRegReq = async(req, res)=>{
 }
 }
 
+const HandleUserRegReqGetAllRequest = async(req, res) =>{
+    try {
+      const data = await DatabaseArticles.find({})
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ error: 'Error fetching data' });
+    }
+}
+const HandleUserRegReqGetById = async( req, res) =>{
+    const itemId = req.params.id;
+    try {
+      const data = await DatabaseArticles.findById(itemId);
+    //   res.render("index" , {data})
+    res.json(data)
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ error: 'Error fetching data' });
+  } 
+}
+const HandleUserRegReqWithPatchRequest = async( req, res) =>{
+    const itemId = req.params.id;
+     await DatabaseArticles.findByIdAndUpdate(itemId , { title:"by patch"});
+     return res.json({msg:"All done on Patch Request"})
+}
+const HandleUserRegReqWithDeleteRequest = async( req, res) =>{
+    const itemId = req.params.id;
+     await DatabaseArticles.findByIdAndDelete(itemId);
+     return res.json({msg:"Successfully Deleted"})
+}
+
+
 module.exports = {
-    HandleUserRegReq,    
+    HandleUserRegReq,   
+    HandleUserRegReqGetAllRequest , 
+    HandleUserRegReqGetById , 
+    HandleUserRegReqWithDeleteRequest , 
+    HandleUserRegReqWithPatchRequest 
 }
