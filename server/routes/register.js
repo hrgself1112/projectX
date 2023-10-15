@@ -17,8 +17,8 @@ router.post('/', HandleUserRegReq);
 router.get("/", HandleUserRegReqGetAllRequest)
 router.get("/today", HandleUserRegReqGetAllRequestForTodayData)
 router.get("/:id", HandleUserRegReqGetById)
-router.get("preview/:id", HandleUserRegReqPreviewGetById)
-router.get("preview/amp/:id", HandleUserRegReqPreviewGetByIdForAMP)
+router.get("/preview/:id", HandleUserRegReqPreviewGetById)
+router.get("/preview/amp/:id", HandleUserRegReqPreviewGetByIdForAMP)
 router.patch("/:id", HandleUserRegReqWithPatchRequest)
 router.delete("/:id", HandleUserRegReqWithDeleteRequest)
 

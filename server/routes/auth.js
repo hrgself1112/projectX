@@ -29,7 +29,7 @@ function deleteAllFilesAndSubdirectories(directoryPath) {
 }
 
 
-router.get('/download', async (req, res) => {
+router.get('/downloadZipfileandData', async (req, res) => {
  // Your MongoDB data retrieval code here
 const jsonData = await DatabaseArticles.find({});
 
