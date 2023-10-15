@@ -10,12 +10,12 @@ const formattedDate = getCurrentFormattedDate();
 const formattedTime = getCurrentFormattedTime();
 const amOrpm = getamOrpm();
 const FormattedNumberDate = getCurrentFormattedNumberDate();
+const { v4: uuidv4 } = require('uuid');
 
 
 const ejs = require('ejs');
 
 const { DatabaseArticles } = require('../models/register');
-
 
 
 
@@ -45,8 +45,8 @@ const HandleUserRegReq = async(req, res)=>{
       ,finalHtmlContent
       ,finalHtmlContentAMP 
     } = req.body
-    // console.log(req.body)
 
+    console.log(req.body)
   const data = checkedOptions
 
 
@@ -98,8 +98,8 @@ const HandleUserRegReq = async(req, res)=>{
     Ressession,
     AMPfaq,
     NormalFaq,
-    finalHtmlContentAMPbeautify , 
-    finalHtmlContentbeautify
+    finalHtmlContentAMP:finalHtmlContentAMPbeautify , 
+    finalHtmlContent:finalHtmlContentbeautify
   }
 
   const ejsTemplate = fs.readFileSync(path.join(__dirname, '../views/template.ejs'), 'utf-8');
@@ -166,22 +166,97 @@ const HandleUserRegReqGetAllRequest = async(req, res) =>{
       res.status(500).json({ error: 'Error fetching data' });
     }
 }
+
+
+const HandleUserRegReqGetAllRequestForTodayData = async(req, res) =>{
+
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  
+  // Usage example:
+  const date = new Date();
+  const formattedDateNumber = formatDate(date);
+  console.log(formattedDateNumber)
+  const dateToSearch = formattedDateNumber; // Replace with the date you want to search for
+
+  const startDate = new Date(dateToSearch);
+  startDate.setHours(0, 0, 0, 0); // Start of the selected date (midnight)
+  
+  const endDate = new Date(dateToSearch);
+  endDate.setHours(23, 59, 59, 999); // End of the selected date (just before midnight)
+  
+  const query = {
+  createdAt: {
+    $gte: startDate, // Greater than or equal to the start of the selected date
+    $lte: endDate,   // Less than or equal to the end of the selected date
+  }
+};
+    try {
+      const data = await DatabaseArticles.find(query)
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ error: 'Error fetching data' });
+    }
+}
+
 const HandleUserRegReqGetById = async( req, res) =>{
     const itemId = req.params.id;
     try {
       const data = await DatabaseArticles.findById(itemId);
-    //   res.render("index" , {data})
-    res.json(data)
+      res.json(data)
     } catch (error) {
       console.error('Error fetching data from MongoDB:', error);
       res.status(500).json({ error: 'Error fetching data' });
   } 
 }
-const HandleUserRegReqWithPatchRequest = async( req, res) =>{
+
+const HandleUserRegReqPreviewGetById = async( req, res) =>{
     const itemId = req.params.id;
-     await DatabaseArticles.findByIdAndUpdate(itemId , { title:"by patch"});
-     return res.json({msg:"All done on Patch Request"})
+    try {
+      const data = await DatabaseArticles.findById(itemId);
+      res.render("index" , { data })    
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ error: 'Error fetching data' });
+  } 
 }
+const HandleUserRegReqPreviewGetByIdForAMP = async( req, res) =>{
+    const itemId = req.params.id;
+    try {
+      const data = await DatabaseArticles.findById(itemId);
+      res.render("ampindex" ,  data )    
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ error: 'Error fetching data' });
+  } 
+}
+
+
+const HandleUserRegReqWithPatchRequest = async( req, res) =>{
+  const itemId = req.params.id;
+  const updateFields = req.body; // Assuming the request body contains the fields to update
+
+
+  try {
+    const updatedItem = await DatabaseArticles.findByIdAndUpdate(itemId, updateFields, { new: true });
+
+    if (!updatedItem) {
+      return res.status(404).json({ msg: 'Item not found' });
+    }
+
+    return res.json({ msg: 'Item updated successfully', item: updatedItem });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ msg: 'An error occurred while updating the item' });
+  }
+}
+
+
 const HandleUserRegReqWithDeleteRequest = async( req, res) =>{
     const itemId = req.params.id;
      await DatabaseArticles.findByIdAndDelete(itemId);
@@ -193,6 +268,9 @@ module.exports = {
     HandleUserRegReq,   
     HandleUserRegReqGetAllRequest , 
     HandleUserRegReqGetById , 
+    HandleUserRegReqPreviewGetById,
     HandleUserRegReqWithDeleteRequest , 
-    HandleUserRegReqWithPatchRequest 
+    HandleUserRegReqWithPatchRequest  , 
+    HandleUserRegReqGetAllRequestForTodayData , 
+    HandleUserRegReqPreviewGetByIdForAMP
 }

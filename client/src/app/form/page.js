@@ -1,14 +1,11 @@
 'use client'
-import useFetch from "@/components/hooks/fetchHook";
 
-import { AuthorByLangskeletons, AuthorByNameskeletons } from "@/components/skeletons/skeletons";
 import React, { useState, useEffect } from "react";
 import { updateuserr , resetUser } from '@/redux/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import CkEditorProjectX from "@/components/ckEditor/ckEditorProjectX";
-import Page from "../upload/page";
 import FormInputs from "./formInputs";
 import ProfileRadioButton from "./profileRadioButton";
+import axios from "axios";
 
 
 const beautify = require('js-beautify').html;
@@ -18,8 +15,6 @@ export const Form = () => {
   const user = useSelector((state) => state.userr);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [normalHTML, setnormalHTML] = useState('');
-  const [normalHTMLAMP, setnormalHTMLAMP] = useState('');
 
 
   
@@ -44,7 +39,7 @@ export const Form = () => {
 
 
 
-    } catch (error) {
+    } catch (error) {f
       console.error('Error formatting HTML:', error);
       dispatch(updateuserr({ ...user, formattedHTML: user.editorData }));
     }
@@ -96,10 +91,6 @@ export const Form = () => {
 
   
   
-  
-  function lkogger(){
-   }
-  
   const PostData = async (e) => {
     e.preventDefault();
 
@@ -107,26 +98,53 @@ export const Form = () => {
       return;
     }
 
-    lkogger()
 
     setIsSubmitting(true)
-    const response = await fetch("http://localhost:8080/register", {
-      method: "POST",
+
+    if(user.tempSid){
+      try {
+        const response = await axios.patch(`http://localhost:8080/register/${user.tempSid}`, user, {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
     });
-    
 
-    if (response.ok) {
-      console.log('Form Data saved successfully ');
-      handleResetUser ()
+    if (response.status === 200) {
+      console.log('Form Data saved successfully');
+      handleResetUser();
     } else {
       console.error('Error saving data');
     }
-    
+
     setIsSubmitting(false);
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+      
+    }
+    else{
+
+      try {
+        const response = await axios.post("http://localhost:8080/register", user, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      console.log('Form Data saved successfully');
+      handleResetUser();
+    } else {
+      console.error('Error saving data');
+    }
+
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}
+
+  setIsSubmitting(false);
+
   }
   
 
@@ -278,7 +296,7 @@ export const Form = () => {
 
 
               <div className="flex px-3 items-center  w-[100%] my-10 justify-center">
-                <button className="      bg-blue-500 hover:cursor-pointer w-[40%] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="submit" >
+                <button className="bg-blue-500 hover:cursor-pointer w-[40%] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="submit" >
                 {isSubmitting ? 'Submitting...' : 'Submit'}
                 </button>
               </div>

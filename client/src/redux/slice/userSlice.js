@@ -5,6 +5,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const  initialState = {
   title: "",
+  tempSid :"" , 
   keywords: "",
   description: "",
   url: "",

@@ -7,18 +7,18 @@
     <link rel="shortcut icon" href="/assets/ico/favicon.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <link rel="canonical" href="https://www.astrosage.com/<%= whichYear%>/<%= url%>">
-    <title><%= title %></title>     <%- finalKeywords%>
-    <meta name="description" content="<%= description %>" />
+    <link rel="canonical" href="https://www.astrosage.com//dfasdfasd">
+    <title>sdffasdfas</title>     
+    <meta name="description" content="" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "NewsArticle",
-        "headline": "<%= title %>",
-        "datePublished": "<%= FormattedNumberDate %>T<%= formattedTime%>:41Z",
+        "headline": "sdffasdfas",
+        "datePublished": "2023-10-15T02:36:41Z",
       "author": {
          "@type": "Person",
-         "name": "<%= profilename%>"
+         "name": "Lobitha Dutta"
                    },
       "publisher": {
         "@type": "Organization",
@@ -48,16 +48,15 @@
 <body>
   <!--#include virtual="/include/amp/header.asp"-->
     <div class="ui-content bg-light-gray">
-        <h1 align="center"><%= h1%></h1>
+        <h1 align="center"></h1>
         <div class="author-date text-right">
-            <span>Author: <a href="<%= profileUrl%>"><%= profilename%></a></span>
-            | <span>Updated <%= formattedDate%> <%= formattedTime%> <%= amOrpm%> IST </span>
+            <span>Author: <a href="https://horoscope.astrosage.com/lobitha-dutta/">Lobitha Dutta</a></span>
+            | <span>Updated Sun, 15 Oct 2023 02:36 PM IST </span>
         </div>
         
-<%- finalHtmlContentAMP%>
 
         
-<%- AMPfaq%>
+
                 
       
         <!--#include virtual="/controls/amp/i_social.asp"-->

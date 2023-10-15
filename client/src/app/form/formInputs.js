@@ -135,12 +135,12 @@ function setDataFaq(){
         </div>
     `;
 
+    dispatch(updateuserr({ ...user, NormalFaq: faqRealHtmlNormal, AMPfaq: faqRealHtmlNormalAMP,}));
+  }
 
   
     
   
-     dispatch(updateuserr({ ...user, NormalFaq: faqRealHtmlNormal, AMPfaq: faqRealHtmlNormalAMP,}));
-    }
 
   return (
     <>
@@ -148,6 +148,7 @@ function setDataFaq(){
 
       <div className="flex flex-wrap">
 
+<input type="text" hidden value={user._id} />
         <div className=" px-5 w-1/2 ">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
