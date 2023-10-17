@@ -18,10 +18,16 @@ export const Form = () => {
 
 
   
+  function addSpaceToStrongTags(htmlString) {
+    // Use a regular expression to match and modify <strong> tags
+    return htmlString.replace(/<strong>(.*?)<\/strong>/g, '<strong> $1 </strong>');
+  }
   
   const processFormattedHTML = (html) => {
   const withoutNbspParagraphs = html.replace(/<p>(&nbsp;|\s*)<\/p>/g, '');
-    const withoutSpaceParagraphs = withoutNbspParagraphs.replace(/<p>\s*<\/p>/g, '');
+  const withoutSpaceParagraphstwo = withoutNbspParagraphs.replace(/<p>\s*<\/p>/g, '');
+  const withoutSpaceParagraphs = addSpaceToStrongTags(withoutSpaceParagraphstwo)    
+  console.log(withoutSpaceParagraphs)
     return withoutSpaceParagraphs;
   };
 
@@ -35,6 +41,7 @@ export const Form = () => {
       });
 
       const processedHTML = processFormattedHTML(formatted);
+      console.log(processedHTML)
       dispatch(updateuserr({ ...user, content: processedHTML }));
 
 
@@ -211,7 +218,7 @@ export const Form = () => {
 
     const modifiedRealContentAMP = withDivsAMP.map((element, index) => {
       if (index === 0) {
-        return element.replace('<div class="card-view-content"><h2>', '\t<div class="card-view-content">');
+        return element.replace('<div class="card-view-content"><h2>', '\t<div class="card-view-content">\n');
       }
       else if (!index === 0) {
         return element.replace('<div class="card-view-content"><h2>', '\t<div class="card-view-content">\n<h2>');

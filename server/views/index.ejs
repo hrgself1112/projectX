@@ -3,7 +3,7 @@
 <html>
 <head>
     <link rel="amphtml" href="https://www.astrosage.com/<%= data.whichYear%>/amp/<%= data.url%>">
-    <title><%= data.title %></title><%- data.finalKeywords%>
+    <title><%= data.title %></title><%- data.keywords%>
     <meta name="description" content="<%= data.description %>" />
     <script type="application/ld+json">{"@context": "https://schema.org/","@type": "BreadcrumbList","itemListElement": [{"@type":"ListItem", "position": 1,"name":"Home","item":"https://www.astrosage.com/" },{"@type":"ListItem", "position": 2,"name":"<%= data.whichYear%>","item":"https://www.astrosage.com/<%= data.whichYear%>/" },{"@type":"ListItem", "position": 3,"name":"<%= data.title %>","item":"https://www.astrosage.com/<%= data.whichYear%>/<%= data.url%>" }]}</script>
     <script type="application/ld+json">
@@ -874,8 +874,7 @@ to AstroSage Cloud</b></a>
 </div>
 </div>
 <div class="ui-content bg-light-gray">
-<h1 align="center">
-Rashifal 2024 (राशिफल 2024)
+<h1 align="center"><%= data.h1%>
 </h1>
 <div class="row">
 <div class="col-md-12">

@@ -9,7 +9,7 @@ const JSZip = require('jszip');
 const app = express()
 const ejs = require('ejs');
 
-const archiver = require('archiver');   
+const archiver = require('archiver');
 
 // Function to delete all files and subdirectories inside a directory
 function deleteAllFilesAndSubdirectories(directoryPath) {
@@ -29,51 +29,85 @@ function deleteAllFilesAndSubdirectories(directoryPath) {
 }
 
 
-router.get('/downloadZipfileandData', async (req, res) => {
- // Your MongoDB data retrieval code here
-const jsonData = await DatabaseArticles.find({});
+router.get('/download-Zipfile-Data', async (req, res) => {
 
-const outputDirectory = path.join(__dirname, 'generatedFiles');
-const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
 
-if (!fs.existsSync(outputDirectory)) {
-  fs.mkdirSync(outputDirectory, { recursive: true });
-}
+  // function formatDate(date) {
+  //   const year = date.getFullYear();
+  //   const month = String(date.getMonth() + 1).padStart(2, '0');
+  //   const day = String(date.getDate()).padStart(2, '0');
+  //   return `${year}-${month}-${day}`;
+  // }
 
-if (!fs.existsSync(outputDirectoryAMP)) {
-  fs.mkdirSync(outputDirectoryAMP, { recursive: true });
-}
+  // // Usage example:
+  // const date = new Date();
+  // const formattedDateNumber = formatDate(date);
+  // console.log(formattedDateNumber)
+  // const dateToSearch = formattedDateNumber; // Replace with the date you want to search for
 
-const archive = archiver('zip', {
-  zlib: { level: 9 }
-});
+  // const startDate = new Date(dateToSearch);
+  // startDate.setHours(0, 0, 0, 0); // Start of the selected date (midnight)
 
-archive.on('error', (err) => {
-  res.status(500).send({ error: err.message });
-});
+  // const endDate = new Date(dateToSearch);
+  // endDate.setHours(23, 59, 59, 999); // End of the selected date (just before midnight)
 
-res.attachment('generatedFiles.zip');
-archive.pipe(res);
+  // const query = {
+  //   createdAt: {
+  //     $gte: startDate, // Greater than or equal to the start of the selected date
+  //     $lte: endDate,   // Less than or equal to the end of the selected date
+  //   }
+  // };
+  // const  = await DatabaseArticles.find(query);
+  
+  let QueryIDS = req.query.DownloadAricleByIDs
 
-for (let i = 0; i < jsonData.length; i++) {
-  const data = jsonData[i];
-  console.log(data)
-  const filename = data.url.replace(/[^\w\s.-]/gi, '');
+  const selectedArticleIds = QueryIDS.split(","); // Replace with your selected IDs
+  console.log(req.query.DownloadAricleByIDs)
 
-  // Render the EJS template with data
-  const renderedHTML = await ejs.renderFile(path.join(__dirname,  '../views/template.ejs'), data );
-  const renderedHTMLAMP = await ejs.renderFile(path.join(__dirname, '../views/amptemplate.ejs'),  data );
 
-  // Write the rendered HTML content to ASP files with the correct extension
-  fs.writeFileSync(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
-  fs.writeFileSync(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
+  const jsonData = await DatabaseArticles.find({ _id: { $in: selectedArticleIds } });
 
-  // Add ASP files to the ZIP archive
-  archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
-  archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
-}
+  const outputDirectory = path.join(__dirname, 'generatedFiles');
+  const outputDirectoryAMP = path.join(__dirname, 'generatedFiles', 'amp');
 
-archive.finalize();
+  if (!fs.existsSync(outputDirectory)) {
+    fs.mkdirSync(outputDirectory, { recursive: true });
+  }
+
+  if (!fs.existsSync(outputDirectoryAMP)) {
+    fs.mkdirSync(outputDirectoryAMP, { recursive: true });
+  }
+
+  const archive = archiver('zip', {
+    zlib: { level: 9 }
+  });
+
+  archive.on('error', (err) => {
+    res.status(500).send({ error: err.message });
+  });
+
+  res.attachment('generatedFiles.zip');
+  archive.pipe(res);
+
+  for (let i = 0; i < jsonData.length; i++) {
+    const data = jsonData[i];
+    console.log(data)
+    const filename = data.url.replace(/[^\w\s.-]/gi, '');
+
+    // Render the EJS template with data
+    const renderedHTML = await ejs.renderFile(path.join(__dirname, '../views/template.ejs'), data);
+    const renderedHTMLAMP = await ejs.renderFile(path.join(__dirname, '../views/amptemplate.ejs'), data);
+
+    // Write the rendered HTML content to ASP files with the correct extension
+    fs.writeFileSync(path.join(outputDirectory, `${filename}.asp`), renderedHTML);
+    fs.writeFileSync(path.join(outputDirectoryAMP, `${filename}.asp`), renderedHTMLAMP);
+
+    // Add ASP files to the ZIP archive
+    archive.file(path.join(outputDirectory, `${filename}.asp`), { name: `generatedFiles/${filename}` });
+    archive.file(path.join(outputDirectoryAMP, `${filename}.asp`), { name: `generatedFiles/amp/${filename}` });
+  }
+
+  archive.finalize();
 });
 
 
@@ -97,7 +131,7 @@ router.get('/api/delete/savedData', (req, res) => {
 });
 
 
-router.post('/saveData',  (req, res) => {
+router.post('/saveData', (req, res) => {
   try {
     const { profilename, profileImageUrl, profileUrl, UniqueKey } = req.body;
 
@@ -113,14 +147,14 @@ router.post('/saveData',  (req, res) => {
           existingData = JSON.parse(data);
         }
         const newData = {
-          profilename:profilename,
-          uniqueKey:UniqueKey,
-          uniqueFindingKey:UniqueKey,
+          profilename: profilename,
+          uniqueKey: UniqueKey,
+          uniqueFindingKey: UniqueKey,
         };
 
         existingData.push(newData);
 
-         fs.writeFile('./profiles/databyauthorname.json', JSON.stringify(existingData, null, 2), (writeErr) => {
+        fs.writeFile('./profiles/databyauthorname.json', JSON.stringify(existingData, null, 2), (writeErr) => {
           if (writeErr) {
             console.error(writeErr);
             res.status(500).json({ error: 'Internal server error' });
@@ -144,8 +178,8 @@ router.post('/saveData',  (req, res) => {
           existingDatanew = JSON.parse(data);
         }
 
-        let searchQuery = "search"+ UniqueKey
-      
+        let searchQuery = "search" + UniqueKey
+
         // Create a new entry for the author using their UniqueKey as the key
         existingDatanew[UniqueKey] = {
           uniqueFindingKey: 'search' + UniqueKey,
@@ -156,7 +190,7 @@ router.post('/saveData',  (req, res) => {
           profileImageUrl: profileImageUrl,
         };
 
-         fs.writeFile('./profiles/authorprofiledata.json', JSON.stringify(existingDatanew, null, 2), (writeErr) => {
+        fs.writeFile('./profiles/authorprofiledata.json', JSON.stringify(existingDatanew, null, 2), (writeErr) => {
           if (writeErr) {
             console.error(writeErr);
             res.status(500).json({ error: 'Internal server error' });
@@ -166,16 +200,16 @@ router.post('/saveData',  (req, res) => {
         });
       }
     });
-    
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 
 
-  
 
-  
+
+
 });
 
 
@@ -183,7 +217,7 @@ router.post('/saveData',  (req, res) => {
 
 
 router.get('/api/savedfiles', (req, res) => {
-const dataFolderPath = path.join(process.cwd(), 'savedData'); // Path to your data folder
+  const dataFolderPath = path.join(process.cwd(), 'savedData'); // Path to your data folder
 
   try {
     // Read the list of files in the "savedData" folder
@@ -198,7 +232,7 @@ const dataFolderPath = path.join(process.cwd(), 'savedData'); // Path to your da
 })
 
 router.get('/api/savedPages', (req, res) => {
-const dataFolderPath = path.join(process.cwd(), 'savedPages/amp'); // Path to your data folder
+  const dataFolderPath = path.join(process.cwd(), 'savedPages/amp'); // Path to your data folder
 
   try {
     const fileNames = fs.readdirSync(dataFolderPath);
@@ -211,4 +245,19 @@ const dataFolderPath = path.join(process.cwd(), 'savedPages/amp'); // Path to yo
 
 
 
+router.get('/get-selected-articles', async (req, res) => {
+  let QueryIDS = req.query.DownloadAricleByIDs
+
+  const selectedArticleIds = QueryIDS.split(","); // Replace with your selected IDs
+  console.log(req.query.DownloadAricleByIDs)
+
+  try {
+    const selectedArticles = await DatabaseArticles.find({ _id: { $in: selectedArticleIds } });
+
+    res.json(selectedArticles);
+  } catch (error) {
+    console.error('Error fetching selected articles:', error);
+    res.status(500).json({ error: 'An error occurred while fetching selected articles.' });
+  }
+});
 module.exports = router;

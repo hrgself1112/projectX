@@ -4,7 +4,7 @@ const Articles = mongoose.Schema({
     title:{
         type:String
     },
-    finalKeywords:{
+    keywords:{
         type:String
     },
     description:{
@@ -46,6 +46,12 @@ const Articles = mongoose.Schema({
     profileUrl:{
         type:String
     },
+    ImageAlt:{
+        type:String
+    },
+    schemaImgUrl:{
+        type:String
+    },
     profileImageUrl:{
         type:String
     },
@@ -59,6 +65,15 @@ const Articles = mongoose.Schema({
         type:String
     },
     faqRealHtmlNormalCheckedorUnchecked:{
+        type:String
+    },
+    isCheckedImage:{
+        type:String
+    },
+    isCheckedFAQ:{
+        type:String
+    },
+    FaqBt:{
         type:String
     },
     NormalFaq:{

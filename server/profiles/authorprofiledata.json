@@ -23,7 +23,8 @@
     "searchGujarati": true,
     "profilename": "Sanghani Jasmin",
     "profileUrl": "https://horoscope.astrosage.com/sanghani-jasmin/",
-    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/10/sanghani-jasmin.jpg"
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/10/sanghani-jasmin.jpg",
+    "FaqLangH2": "વારંવાર પૂછવામાં આવતા પ્રશ્નો"
   },
   "Marathi": {
     "uniqueFindingKey": "searchMarathi",
@@ -125,5 +126,21 @@
     "profilename": "Acharya  Hanuman Mishra",
     "profileUrl": "https://horoscope.astrosage.com/pandit-hanuman-mishra/",
     "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2023/03/astrologer-hanuman-mishra-1.jpg"
+  },
+  "PrashantNigam": {
+    "uniqueFindingKey": "searchPrashantNigam",
+    "uniqueKey": "PrashantNigam",
+    "searchPrashantNigam": true,
+    "profilename": "Prashant Nigam",
+    "profileUrl": "https://horoscope.astrosage.com/prashant-nigam/",
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2023/06/prashant-nigam.jpg"
+  },
+  "RuchiSharma": {
+    "uniqueFindingKey": "searchRuchiSharma",
+    "uniqueKey": "RuchiSharma",
+    "searchRuchiSharma": true,
+    "profilename": "Ruchi Sharma",
+    "profileUrl": "https://horoscope.astrosage.com/ruchi-sharma/",
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/10/author-ruchi.jpg"
   }
 }

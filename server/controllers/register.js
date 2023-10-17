@@ -1,8 +1,3 @@
-
-
-
-const fs = require('fs');
-const path = require('path');
 const { getCurrentFormattedDate, getCurrentFormattedTime, getamOrpm, getCurrentFormattedNumberDate } = require('../utils/date');
 
 // Get the current date and time
@@ -10,10 +5,7 @@ const formattedDate = getCurrentFormattedDate();
 const formattedTime = getCurrentFormattedTime();
 const amOrpm = getamOrpm();
 const FormattedNumberDate = getCurrentFormattedNumberDate();
-const { v4: uuidv4 } = require('uuid');
 
-
-const ejs = require('ejs');
 
 const { DatabaseArticles } = require('../models/register');
 
@@ -47,6 +39,7 @@ const HandleUserRegReq = async(req, res)=>{
     } = req.body
 
     console.log(req.body)
+    
   const data = checkedOptions
 
 
@@ -77,71 +70,36 @@ const HandleUserRegReq = async(req, res)=>{
     
 
 
-  const templateData = {
-    title,
-    finalKeywords,
-    description,
-    url,
-    h1,
-    conditonalSchemaImage,
-    content,
-    formattedDate,
-    formattedTime,
-    FormattedNumberDate,
-    amOrpm,
-    whichYear,
-    checkedOptions,
-    profilename,
-    profileUrl,
-    profileImageUrl,
-    ResLineOne,
-    Ressession,
-    AMPfaq,
-    NormalFaq,
-    finalHtmlContentAMP:finalHtmlContentAMPbeautify , 
-    finalHtmlContent:finalHtmlContentbeautify
-  }
-
-  const ejsTemplate = fs.readFileSync(path.join(__dirname, '../views/template.ejs'), 'utf-8');
-  const ampejsTemplate = fs.readFileSync(path.join(__dirname, '../views/amptemplate.ejs'), 'utf-8');
-
-  const renderedTemplate = ejs.render(ejsTemplate, templateData);
-  const amprenderedTemplate = ejs.render(ampejsTemplate, templateData);
-
-  fs.writeFileSync(`./savedPages/${url}`, renderedTemplate);
-  fs.writeFileSync(`./savedPages/amp/${url}`, amprenderedTemplate);
-
- function removeExtension(fileName) {
-  if (fileName.endsWith('.asp')) {
-    return fileName.slice(0, -4);
-  }
-  return fileName;
-}
-
- const jsonDataFilePath = path.join(__dirname, '../savedData', `${removeExtension(url)}.json`);
-
- fs.writeFileSync(jsonDataFilePath, JSON.stringify(req.body, null, 2), 'utf-8');
-
-
  await DatabaseArticles.create({
   title:title,
-  finalKeywords:finalKeywords,
+  keywords:finalKeywords,
   description:description,
   url:url,
   h1:h1,
-  conditonalSchemaImage:conditonalSchemaImage,
+
   content:content,
+
   formattedDate:formattedDate,
   formattedTime:formattedTime,
-  FormattedNumberDate:FormattedNumberDate,
   amOrpm:amOrpm,
+  FormattedNumberDate:FormattedNumberDate,
   whichYear:whichYear,
+
+  isCheckedImage:isCheckedImage,
+  conditonalSchemaImage:conditonalSchemaImage,
+  isCheckedFAQ: isCheckedFAQ,
+  schemaImgUrl:schemaImgUrl ,
+  ImageAlt:ImageAlt ,
+  
   checkedOptions:checkedOptions,
   profilename:profilename,
   profileUrl:profileUrl,
   profileImageUrl:profileImageUrl,
+
   ResLineOne:ResLineOne,
   Ressession:Ressession,
+
+  FaqBt: FaqBt,
   AMPfaq:AMPfaq,
   NormalFaq:NormalFaq,
   finalHtmlContentAMP:finalHtmlContentAMPbeautify,
@@ -177,16 +135,17 @@ const HandleUserRegReqGetAllRequestForTodayData = async(req, res) =>{
     return `${year}-${month}-${day}`;
   }
   
-  // Usage example:
   const date = new Date();
   const formattedDateNumber = formatDate(date);
-  console.log(formattedDateNumber)
   const dateToSearch = formattedDateNumber; // Replace with the date you want to search for
+  
+  const StartFinalDate = req.query.startDate
+  const EndFinalDate = req.query.endDate
 
-  const startDate = new Date(dateToSearch);
+  const startDate = new Date(StartFinalDate);
   startDate.setHours(0, 0, 0, 0); // Start of the selected date (midnight)
   
-  const endDate = new Date(dateToSearch);
+  const endDate = new Date(EndFinalDate);
   endDate.setHours(23, 59, 59, 999); // End of the selected date (just before midnight)
   
   const query = {
@@ -214,6 +173,7 @@ const HandleUserRegReqGetById = async( req, res) =>{
       res.status(500).json({ error: 'Error fetching data' });
   } 
 }
+
 
 const HandleUserRegReqPreviewGetById = async( req, res) =>{
     const itemId = req.params.id;

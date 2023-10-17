@@ -13,11 +13,11 @@ const Page = () => {
     const [fileLoaded, setFileLoaded] = useState(false);
     const [btndisabled, setbtndisabled] = useState(true);
 
-    
-          // Helper function to remove HTML tags and handle special characters
-          function cleanTextNewwer(text) {
-            return text.replace(/&nbsp;/g, '').trim();
-        }
+
+    // Helper function to remove HTML tags and handle special characters
+    function cleanTextNewwer(text) {
+        return text.replace(/&nbsp;/g, '').trim();
+    }
     const { title,
         keywords
         , description
@@ -122,13 +122,13 @@ const Page = () => {
         };
 
 
-          // Helper function to remove HTML tags and handle special characters
-    function cleanText(text) {
-        return text.replace(/<\/?strong>/g, '').replace(/&nbsp;/g, '').trim();
-    }
+        // Helper function to remove HTML tags and handle special characters
+        function cleanText(text) {
+            return text.replace(/<\/?strong>/g, '').replace(/&nbsp;/g, '').trim();
+        }
         // Extract data using regular expressions
         // const titleMatch = htmlContent.match(/<strong>Title:<\/strong>\s*([^<]+)/i);
-        
+
         const titleMatch = htmlContent.match(/(?:<strong>|<\/strong>)?Title(?:<\/strong>|<\/strong>)?(?::|<strong>:<\/strong>|:)\s*([^<]+)/i);
         const urlMatch = htmlContent.match(/(?:<strong>)?URL(?:<\/strong>)?(?::|<strong>:<\/strong>|:)\s*<a\s+[^>]*href="([^"]+)"/i);
         const keywordsMatch = htmlContent.match(/(?:<strong>)?Keywords(?:<\/strong>)?(?::|<strong>:<\/strong>|:)((?:\s*<strong>)?.*?(?:<\/strong>)*),/i);
@@ -137,18 +137,18 @@ const Page = () => {
         const altMatch = htmlContent.match(/(?:<strong>)?Alt(?:<\/strong>)?(?::|<strong>:<\/strong>|:)\s*([^<]+)/i);
         const desMatcht = htmlContent.match(/(?:<strong>)?Des(?:<\/strong>)?(?::|<strong>:<\/strong>|:)\s*([^<]+)/i);
         const AltMatch = htmlContent.match(/(?:<strong>)?Alt(?:<\/strong>)?(?::|<strong>:<\/strong>|:)\s*([^<]+)/i);
-                
+
 
         const onetitleMatch = htmlContent.match(/Title:\s*([^<]+)/i);
         const onekeywordsMatch = htmlContent.match(/Keywords:\s*([^<]+)/i);
-        const oneurlMatch = htmlContent.match(/URL:\s*<a\s+[^>]*href="([^"]+)"/i);
-        const oneurlMatchN = htmlContent.match(/URL: \s*<a\s+[^>]*href="([^"]+)"/i);
+        const oneurlMatch = htmlContent.match(/Url:\s*([^<]+)/i);
+        const oneurlMatchN = htmlContent.match(/URL:\s*([^<]+)/i);
         const onealtMatch = htmlContent.match(/Alt:\s*([^<]+)/i);
         const onedesMatch = htmlContent.match(/Description:\s*([^<]+)/i);
         const onedesMatcht = htmlContent.match(/Des:\s*([^<]+)/i);
         const oneh1Match = htmlContent.match(/H1:\s*([^<]+)/i);
         const oneAltMatch = htmlContent.match(/Alt:\s*([^<]+)/i);
-        
+
 
 
         if (titleMatch) {
@@ -165,8 +165,8 @@ const Page = () => {
             dataObject.Alt = cleanText(oneAltMatch[1])
         }
         if (oneurlMatchN) {
-            let dataObjectnew = cleanText(oneurlMatchN[1])      
-            console.log(dataObjectnew)     
+            let dataObjectnew = cleanText(oneurlMatchN[1])
+            console.log(dataObjectnew)
             let an = extractFileNamesFromUrls(dataObjectnew)
             console.log(an)
             dataObject.URL = an
@@ -177,37 +177,37 @@ const Page = () => {
             const keywords = cleanText(keywordsMatch[1])
             dataObject.keywords = keywords.replace(/<\/?strong>/g, ''); // Remove <strong> tags
         }
-        
+
         if (onekeywordsMatch) {
             dataObject.keywords = cleanText(onekeywordsMatch[1])
         }
 
         if (urlMatch) {
-            let dataObjectnew = cleanText(urlMatch[1])         
-            console.log(dataObjectnew)  
+            let dataObjectnew = cleanText(urlMatch[1])
+            console.log(dataObjectnew)
             let an = extractFileNamesFromUrls(dataObjectnew)
             console.log(an)
             dataObject.URL = an
         }
         if (oneurlMatch) {
-            let dataObjectnew = cleanText(oneurlMatch[1])     
-            console.log(dataObjectnew)      
+            let dataObjectnew = cleanText(oneurlMatch[1])
+            console.log(dataObjectnew)
             let an = extractFileNamesFromUrls(dataObjectnew)
             console.log(an)
             dataObject.URL = an
         }
-        
 
-        
+
+
         if (desMatcht) {
             const keywords = cleanText(desMatch[1])
             dataObject.Des = keywords.replace(/<\/?strong>/g, ''); // Remove <strong> tags
         }
         if (onedesMatcht) {
             dataObject.Des = cleanText(onedesMatcht[1])
-    }
-   
-   
+        }
+
+
         if (altMatch) {
             dataObject.Alt = cleanText(altMatch[1])
         }
@@ -233,11 +233,11 @@ const Page = () => {
         return dataObject;
     }
 
-  
+
     function extractFileNamesFromUrls(urls) {
         const parts = urls.split("/");
         return parts[parts.length - 1];
-    }      
+    }
 
     function handleButtonClick() {
 
@@ -249,7 +249,7 @@ const Page = () => {
         const $ = cheerio.load(htmlContent);
 
         // Define a list of content to remove based on their content
-        const contentToRemove = ['Written By:', 'Translated By:', 'Title:', 'URL:', 'Alt:', 'Des:', 'Description:','Keywords:','H1:', 'Image:', 'image:',];
+        const contentToRemove = ['Written By:', 'Translated By:', 'Title:', 'URL:', 'Alt:', 'Des:', 'Description:', 'Keywords:', 'H1:', 'Image:', 'image:',];
 
         contentToRemove.forEach((content) => {
             $(`p:contains('${content}')`).remove();
@@ -273,23 +273,23 @@ const Page = () => {
 
     }
 
-function SetContent(){
-    if(content == ""){
-        alert("enter something in content box")
+    function SetContent() {
+        if (content == "") {
+            alert("enter something in content box")
+        }
+        else {
+            setRenderedDoc(cleanTextNewwer(content))
+            console.log(content)
+            setFileLoaded(true);
+            console.log(renderedDoc)
+        }
     }
-    else{
-        setRenderedDoc(cleanTextNewwer(content))
-        console.log(content)
-        setFileLoaded(true);
-        console.log(renderedDoc)
-    }
-}
-    
+
 
     useEffect(() => {
         dispatch(updateuserr({ content: clear }));
 
-    }, [clear, data ])
+    }, [clear, data])
 
     return (
         <>
@@ -308,14 +308,14 @@ function SetContent(){
                 </label>
 
                 <div className="mx-5">
-                <button onClick={SetContent}
-className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-400 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 ">Set Content</button>
+                    <button onClick={SetContent}
+                        className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-400 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 ">Set Content</button>
                 </div>
                 <button
                     className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 disabled:bg-green-800"
                     onClick={handleButtonClick}
-                    disabled={!fileLoaded }
-                     // Disable the button if fileLoaded is false
+                    disabled={!fileLoaded}
+                // Disable the button if fileLoaded is false
                 >
                     {loading ? <>
                         <span class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading"></span>

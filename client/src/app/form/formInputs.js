@@ -10,14 +10,14 @@ const FormInputs = () => {
 
 
   const dispatch = useDispatch();
-  
+
   const user = useSelector((state) => state.userr);
 
-  
-const {FaqBt} =  user
+
+  const { FaqBt } = user
 
 
-    
+
 
   const handleCheckboxChange = (e) => {
     dispatch(updateuserr({ ...user, isCheckedImage: e.target.checked }));
@@ -32,41 +32,41 @@ const {FaqBt} =  user
 
   const handleRadioChange = (event) => {
     dispatch(updateuserr({ ...user, selectedLanguage: event.target.value }));
-    
+
   };
 
   const handleFAQChecked = (e) => {
     dispatch(updateuserr({ ...user, isCheckedFAQ: e.target.checked }));
   };
-  
 
-function mmn(){
-  if(user.isCheckedFAQ){
-    setDataFaq()
+
+  function mmn() {
+    if (user.isCheckedFAQ) {
+      setDataFaq()
+    }
+    else {
+      dispatch(updateuserr({ ...user, NormalFaq: "", AMPfaq: "", }));
+
+    }
   }
-  else{
-    dispatch(updateuserr({ ...user, NormalFaq: "", AMPfaq: "",}));
-
-  }
-}
-  
-
-  
-const handleTextarea = (name, value) => {
-  dispatch(updateuserr({ [name]: value }));
-};
 
 
 
-useEffect(() => {
-  mmn()
-  
-  return () => {
+  const handleTextarea = (name, value) => {
+    dispatch(updateuserr({ [name]: value }));
+  };
+
+
+
+  useEffect(() => {
     mmn()
-  }
-}, [user.isCheckedFAQ])
 
-function setDataFaq(){
+    return () => {
+      mmn()
+    }
+  }, [user.isCheckedFAQ])
+
+  function setDataFaq() {
 
     // Split the inputText into an array of lines
     const inputText = FaqBt
@@ -84,7 +84,7 @@ function setDataFaq(){
       }
     }
 
-       const faqElementsAMP = FAQ.map((item, index) => {
+    const faqElementsAMP = FAQ.map((item, index) => {
       return (
 
         index == FAQ.length - 1 ? `{
@@ -128,27 +128,26 @@ function setDataFaq(){
 
 
     const faqRealHtmlNormal = `\t<div class="card-view-content">
-      <h2>${ user.selectedLanguage != "" ? user.selectedLanguage : user.checkedOptions[0]['FaqLangH2']}</h2>
+      <h2>${user.selectedLanguage != "" ? user.selectedLanguage : user.checkedOptions[0]['FaqLangH2']}</h2>
       <div itemscope itemtype="https://schema.org/FAQPage">
         ${faqElements.join('')}
         </div>
         </div>
     `;
 
-    dispatch(updateuserr({ ...user, NormalFaq: faqRealHtmlNormal, AMPfaq: faqRealHtmlNormalAMP,}));
+    dispatch(updateuserr({ ...user, NormalFaq: faqRealHtmlNormal, AMPfaq: faqRealHtmlNormalAMP, }));
   }
 
-  
-    
-  
+
+
+
 
   return (
     <>
 
 
-      <div className="flex flex-wrap">
 
-<input type="text" hidden value={user._id} />
+      <div className="flex flex-wrap">
         <div className=" px-5 w-1/2 ">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
@@ -205,7 +204,6 @@ function setDataFaq(){
 
 
 
-
       <div className="flex mx-4 my-5 w-1/3 items-center">
         <input id={`ImagecCheck`} className="relative shrink-0 w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-green-200   rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-green-600 focus:ring-green-200 ring-offset-white focus:outline-none appearance-none dark:bg-gray-300 dark:checked:bg-green-600 dark:focus:ring-offset-gray-100  before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-[2px] before:translate-y-[1px] checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-green-200 "
           type="checkbox"
@@ -249,12 +247,12 @@ function setDataFaq(){
 
 
       <div className="mb-4 px-5 gridMakerLang ">
-      
+
         <input id="hs-medium-switch" className="relative shrink-0 w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-green-200   rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-green-600 focus:ring-green-200 ring-offset-white focus:outline-none appearance-none dark:bg-gray-300 dark:checked:bg-green-600 dark:focus:ring-offset-gray-100  before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-[2px] before:translate-y-[1px] checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-green-200 " type="checkbox" checked={user.isCheckedFAQ} onChange={handleFAQChecked} />
         <label for="hs-medium-switch" className="text-sm text-gray-500 ml-3 dark:text-gray-400"> FAQ
         </label>
-     
-     
+
+
         <br />
         <br />
 

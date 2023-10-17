@@ -6,6 +6,7 @@ import { updateuserr } from '@/redux/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RightSideBarskeletons } from "../skeletons/skeletons";
 import Buttons from "../button/buttons";
+import Link from "next/link";
 
 
 const Rightbar = () => {
@@ -91,7 +92,7 @@ const Rightbar = () => {
       <div id="hs-overlay-right" className="hs-overlay  hs-overlay-open:translate-x-0 hidden translate-x-full fixed top-0 right-0 transition-all duration-300 transform h-full max-w-[60%] w-full z-[60] bg-white border-l dark:bg-gray-800 dark:border-gray-700" tabIndex={-1}>
         <div className="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
           <h3 className="font-bold text-gray-800 dark:text-white">
-            Saved Articles Data
+         Preview and Download
           </h3>
           <button type="button" className="inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white text-sm dark:text-gray-500 dark:hover:text-gray-400 dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800" data-hs-overlay="#hs-overlay-right">
             <span className="sr-only">Close modal</span>
@@ -103,17 +104,19 @@ const Rightbar = () => {
 
 
 
+
           <div className="absolute bottom-4 my-3">
             <h3 className="text-white text-sm my-3">Delete  saved Profile Data</h3>
             <button data-hs-overlay="#hs-static-backdrop-modalDeldiretorysavefile" className=" flex items-center gap-x-3.5 py-2 px-2.5 text-sm bg-gray-500  rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-slate-100 dark:hover:text-slate-300 text-white" >Delete All files</button>
           </div>
 
         </div>
+
+
+
+   
+
         <div className="p-4 makignitscrollnew"  >
-
-
-
-
           {
             fileNamess && fileNamess.fileNames ? (fileNamess.fileNames.map((items , index) => {
               return (
