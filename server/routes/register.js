@@ -20,7 +20,7 @@ router.get("/:id", HandleUserRegReqGetById)
 router.get("/preview/:id", HandleUserRegReqPreviewGetById)
 router.get("/preview/amp/:id", HandleUserRegReqPreviewGetByIdForAMP)
 router.patch("/:id", HandleUserRegReqWithPatchRequest)
-router.delete("/:id", HandleUserRegReqWithDeleteRequest)
+router.delete("/deletefiles", HandleUserRegReqWithDeleteRequest)
 
 
 

@@ -217,11 +217,24 @@ const HandleUserRegReqWithPatchRequest = async( req, res) =>{
 }
 
 
-const HandleUserRegReqWithDeleteRequest = async( req, res) =>{
-    const itemId = req.params.id;
-     await DatabaseArticles.findByIdAndDelete(itemId);
-     return res.json({msg:"Successfully Deleted"})
+const HandleUserRegReqWithDeleteRequest = async (req, res) => {
+  const itemIds = req.query.DownloadAricleByIDs; // Assuming the IDs are sent in the request body as an array
+
+  console.log(itemIds)
+
+  try {
+      const result = await DatabaseArticles.deleteMany({ _id: { $in: itemIds } });
+
+      if (result.deletedCount > 0) {
+          return res.json({ msg: `Successfully deleted ${result.deletedCount} items` });
+      } else {
+          return res.json({ msg: "No items were deleted" });
+      }
+  } catch (error) {
+      return res.status(500).json({ error: "An error occurred while deleting items" });
+  }
 }
+
 
 
 module.exports = {
