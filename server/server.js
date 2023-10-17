@@ -28,11 +28,14 @@ app.use(express.json({ limit: '50mb' })); // Set your desired payload size limit
 app.use(cors());
 
 
+app.use( require("./routes/downloadfiles"));
 app.use(require('./routes/auth'));
 
 app.set('views', __dirname + '/views');
 
 app.use("/register" , register);
+
+
 
 
 
