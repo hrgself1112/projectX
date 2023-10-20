@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from "react";
-import { updateuserr , resetUser } from '@/redux/slice/userSlice';
+import { updateuserr, resetUser } from '@/redux/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import FormInputs from "./formInputs";
 import ProfileRadioButton from "./profileRadioButton";
@@ -13,21 +13,21 @@ const beautify = require('js-beautify').html;
 export const Form = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userr);
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
 
-  
+
   function addSpaceToStrongTags(htmlString) {
     // Use a regular expression to match and modify <strong> tags
     return htmlString.replace(/<strong>(.*?)<\/strong>/g, '<strong> $1 </strong>');
   }
-  
+
   const processFormattedHTML = (html) => {
-  const withoutNbspParagraphs = html.replace(/<p>(&nbsp;|\s*)<\/p>/g, '');
-  const withoutSpaceParagraphstwo = withoutNbspParagraphs.replace(/<p>\s*<\/p>/g, '');
-  const withoutSpaceParagraphs = addSpaceToStrongTags(withoutSpaceParagraphstwo)    
-  console.log(withoutSpaceParagraphs)
+    const withoutNbspParagraphs = html.replace(/<p>(&nbsp;|\s*)<\/p>/g, '');
+    const withoutSpaceParagraphstwo = withoutNbspParagraphs.replace(/<p>\s*<\/p>/g, '');
+    const withoutSpaceParagraphs = addSpaceToStrongTags(withoutSpaceParagraphstwo)
+    console.log(withoutSpaceParagraphs)
     return withoutSpaceParagraphs;
   };
 
@@ -46,58 +46,27 @@ export const Form = () => {
 
 
 
-    } catch (error) {f
+    } catch (error) {
+      f
       console.error('Error formatting HTML:', error);
       dispatch(updateuserr({ ...user, formattedHTML: user.editorData }));
     }
 
-    
+
   }, [user.editorData]);
 
-  
-  
-  
-
-  // console.log(modifyffnormal)
-  function removeJsonExtension(fileNames) {
-    // Use the `replace` method with a regular expression to remove ".json"
-    const withoutExtension = fileNames.replace(/\.json$/, '');
-    return withoutExtension;
-  }
 
 
-  const fetchDataList = async (fileName) => {
-    try {
-      const response = await fetch(`http://localhost:8080/api/savedfiles/${fileName}`);
-      const data = await response.json();
 
-      // Create a copy of the current user state
-      const updatedUser = { ...user };
-
-      // Iterate over the properties in the JSON data
-      for (const key in data) {
-        // Check if the property exists in the user state
-        if (user.hasOwnProperty(key)) {
-          // Update the property in the user state with the value from the JSON data
-          updatedUser[key] = data[key];
-        }
-      }
-
-      // Update the user state with the merged data
-      setuser(updatedUser);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
 
 
   const handleYearChange = (year) => {
     dispatch(updateuserr(({ ...user, whichYear: year, })));
   };
- 
 
-  
-  
+
+
+
   const PostData = async (e) => {
     e.preventDefault();
 
@@ -108,60 +77,60 @@ export const Form = () => {
 
     setIsSubmitting(true)
 
-    if(user.tempSid){
+    if (user.tempSid) {
       try {
         const response = await axios.patch(`http://localhost:8080/register/${user.tempSid}`, user, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-    if (response.status === 200) {
-      console.log('Form Data saved successfully');
-      handleResetUser();
-    } else {
-      console.error('Error saving data');
-    }
+        if (response.status === 200) {
+          console.log('Form Data saved successfully');
+          handleResetUser();
+        } else {
+          console.error('Error saving data');
+        }
 
-    setIsSubmitting(false);
-  } catch (error) {
-    console.error('An error occurred:', error);
-  }
-      
+        setIsSubmitting(false);
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+
     }
-    else{
+    else {
 
       try {
         const response = await axios.post("http://localhost:8080/register", user, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-    if (response.status === 200) {
-      console.log('Form Data saved successfully');
-      handleResetUser();
-    } else {
-      console.error('Error saving data');
+        if (response.status === 200) {
+          console.log('Form Data saved successfully');
+          handleResetUser();
+        } else {
+          console.error('Error saving data');
+        }
+
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
     }
 
-  } catch (error) {
-    console.error('An error occurred:', error);
-  }
-}
-
-  setIsSubmitting(false);
+    setIsSubmitting(false);
 
   }
-  
 
-  function handleResetUser () {
+
+  function handleResetUser() {
     dispatch(resetUser());
   }
 
 
   useEffect(() => {
-  
+
     const htmlContent = `${user.content}`;
 
     const sections = htmlContent.split('<h2>');
@@ -221,19 +190,36 @@ export const Form = () => {
         return element.replace('<div class="card-view-content"><h2>', '\t<div class="card-view-content">\n');
       }
       else if (!index === 0) {
-        return element.replace('<div class="card-view-content"><h2>', '\t<div class="card-view-content">\n<h2>');
+        return element.replace('<div class="card-view-content"><h2>', '\t<div class="card-view-content">\jhriritk<h2>');
       }
       return element;
     });
 
-    let modifyffnormal =  modifiedRealContent.join('')
+
+
+
+    let grt;
+    modifiedRealContentAMP.forEach((element, index) => {
+      if (index === modifiedRealContentAMP.length - 1) {
+        grt = element.split("</div>").join(`${user.lastFaqText} </div>`)
+      }
+    });
+
+
+
+
+    modifiedRealContentAMP[modifiedRealContentAMP.length - 1] = grt;
+
+
+
+    let modifyffnormal = modifiedRealContent.join('')
     let modifyffamp = modifiedRealContentAMP.join('')
 
-    
+
     dispatch(updateuserr({ ...user, finalHtmlContent: modifyffnormal, finalHtmlContentAMP: modifyffamp, }));
 
-  }, [isSubmitting , user.content])
-  
+  }, [isSubmitting, user.content])
+
 
   return (
 
@@ -297,14 +283,14 @@ export const Form = () => {
                 </div>
 
                 <hr className="my-5 border border-3 " />
-             
-             <ProfileRadioButton/>
+
+                <ProfileRadioButton />
               </div>
 
 
               <div className="flex px-3 items-center  w-[100%] my-10 justify-center">
                 <button className="bg-blue-500 hover:cursor-pointer w-[40%] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="submit" >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                  {isSubmitting ? 'Submitting...' : 'Submit'}
                 </button>
               </div>
             </div>

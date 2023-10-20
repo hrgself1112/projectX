@@ -26,7 +26,8 @@ const HandleUserRegReq = async(req, res)=>{
       ,content
       ,year
       ,checkedOptions
-      ,selectedLanguage
+      ,selectedLanguage, 
+      lastFaqText
       ,FaqBt
       ,isCheckedFAQ
       ,whichYear
@@ -38,7 +39,7 @@ const HandleUserRegReq = async(req, res)=>{
       ,finalHtmlContentAMP 
     } = req.body
 
-    console.log(req.body)
+    // console.log(req.body)
     
   const data = checkedOptions
 
@@ -103,7 +104,8 @@ const HandleUserRegReq = async(req, res)=>{
   AMPfaq:AMPfaq,
   NormalFaq:NormalFaq,
   finalHtmlContentAMP:finalHtmlContentAMPbeautify,
-  finalHtmlContent:finalHtmlContentbeautify
+  finalHtmlContent:finalHtmlContentbeautify,
+  lastFaqText:lastFaqText
 
   })
 

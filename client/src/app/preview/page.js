@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Hritik = () => {
 
-  // const useRef =  useRef(null)
   const [isVisible, setIsVisible] = useState(false);
 
 

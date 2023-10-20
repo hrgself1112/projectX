@@ -142,5 +142,13 @@
     "profilename": "Ruchi Sharma",
     "profileUrl": "https://horoscope.astrosage.com/ruchi-sharma/",
     "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/10/author-ruchi.jpg"
+  },
+  "DrishtiMathur": {
+    "uniqueFindingKey": "searchDrishtiMathur",
+    "uniqueKey": "DrishtiMathur",
+    "searchDrishtiMathur": true,
+    "profilename": "Drishti Mathur",
+    "profileUrl": "https://horoscope.astrosage.com/drishti-mathur/",
+    "profileImageUrl": "https://horoscope.astrosage.com/wp-content/uploads/2022/11/drishti-mathur.jpg"
   }
 }

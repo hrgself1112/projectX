@@ -1,5 +1,7 @@
 "use client"
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 function MyForm() {
   const [formData, setFormData] = useState({
     profilename: '',
@@ -15,22 +17,42 @@ function MyForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const response = await fetch('http://localhost:8080/saveData', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      console.log('Data saved successfully');
-    } else {
-      
-      console.error('Error saving data');
+  
+    try {
+      const response = await fetch('http://localhost:8080/saveData', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (response.ok) {
+        console.log('Data saved successfully');
+        setFormData({ ...formData, profilename: '',
+        UniqueKey: "",
+        profileUrl: '',
+        profileImageUrl: ""  });
+        toast.success('Data saved successfully');
+      } else {
+        console.error('Error saving data');
+        toast.error('Error saving data');
+      }
+    } catch (error) {
+      console.error('Error saving data', error);
+      toast.error('Error saving data');
     }
   };
+  
+  const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
+  
+  // toast.promise(resolveAfter3Sec, {
+  //   loading: 'Saving data...', // Show a loading message while waiting for the promise
+  //   success: 'Data saved successfully',
+  //   error: 'Error saving data',
+  // });
+
+
 
   return (
 <>
@@ -76,8 +98,9 @@ function MyForm() {
       </form>
     </div>
   </div>
-</div>
+  </div>
    
+ <Toaster position="top-right" />
     </>
 
   );

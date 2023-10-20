@@ -25,6 +25,7 @@ const  initialState = {
   AMPfaq:"" , 
   NormalFaq:"" , 
   finalHtmlContent:"" , 
+  lastFaqText:"" , 
   finalHtmlContentAMP:"" 
 };
 const userSlice = createSlice({

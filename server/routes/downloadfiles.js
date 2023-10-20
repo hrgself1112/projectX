@@ -14,13 +14,13 @@ const archiver = require('archiver');
 
 
 
-router.get('/download-Zipfile-Data', async (req, res) => {
 
+router.get('/download-Zipfile-Data', async (req, res) => {
 
   let QueryIDS = req.query.DownloadAricleByIDs
 
-  const selectedArticleIds = QueryIDS.split(","); // Replace with your selected IDs
-  console.log(req.query.DownloadAricleByIDs)
+  const selectedArticleIds = "653130224ce16b78a9a3f411"; // Replace with your selected IDs
+  // console.log(req.query.DownloadAricleByIDs)
 
 
   const jsonData = await DatabaseArticles.find({ _id: { $in: selectedArticleIds } });
@@ -49,7 +49,7 @@ router.get('/download-Zipfile-Data', async (req, res) => {
 
   for (let i = 0; i < jsonData.length; i++) {
     const data = jsonData[i];
-    console.log(data)
+    // console.log(data)
     const filename = data.url.replace(/[^\w\s.-]/gi, '');
 
    // Add ASP files to the ZIP archive

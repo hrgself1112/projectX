@@ -88,6 +88,9 @@ const Articles = mongoose.Schema({
     finalHtmlContentAMP:{
         type:String
     },
+    lastFaqText:{
+        type:String
+    },
 },
     {
         timestamps:true

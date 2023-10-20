@@ -4,7 +4,8 @@ import { updateuserr } from '@/redux/slice/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import CkEditorProjectX from '@/components/ckEditor/ckEditorProjectX';
 import { useEffect } from 'react';
-
+import toast from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 const FormInputs = () => {
 
@@ -14,7 +15,7 @@ const FormInputs = () => {
   const user = useSelector((state) => state.userr);
 
 
-  const { FaqBt } = user
+  const { FaqBt , lastFaqText } = user
 
 
 
@@ -36,7 +37,14 @@ const FormInputs = () => {
   };
 
   const handleFAQChecked = (e) => {
-    dispatch(updateuserr({ ...user, isCheckedFAQ: e.target.checked }));
+    if(user.checkedOptions.length >= 1){
+      dispatch(updateuserr({ ...user, isCheckedFAQ: e.target.checked }));
+    }
+    else{
+      // alert("Please check and language to use FaQ")
+      toast.error('Please Select a language or author');
+    }
+
   };
 
 
@@ -132,7 +140,8 @@ const FormInputs = () => {
       <div itemscope itemtype="https://schema.org/FAQPage">
         ${faqElements.join('')}
         </div>
-        </div>
+        ${lastFaqText}
+        </div>  
     `;
 
     dispatch(updateuserr({ ...user, NormalFaq: faqRealHtmlNormal, AMPfaq: faqRealHtmlNormalAMP, }));
@@ -307,6 +316,17 @@ const FormInputs = () => {
           Frequently Asked Question
           <textarea onChange={(e) => handleTextarea("FaqBt", e.target.value)} value={user.FaqBt} name="FaqBt" className="py-3 px-4 block w-full border-2 border-gray-300 rounded-md text-sm focus:border-blue-500 focus-visible:ring-blue-500 light:bg-slate-900 " rows={5} placeholder="/q+ =Question    /a+ =Answer" />
         </label>
+      </div>
+
+      <div className="mb-4 px-5">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+Last FaqText
+          <textarea onChange={(e) => handleTextarea("lastFaqText", e.target.value)} value={user.lastFaqText} name="lastFaqText" className="py-3 px-4 block w-full border-2 border-gray-300 rounded-md text-sm focus:border-blue-500 focus-visible:ring-blue-500 light:bg-slate-900 " rows={5} placeholder="<p>enter last text of after faq</p>" />
+        </label>
+
+
+
+        <Toaster position="top-right" />        
       </div>
 
 
